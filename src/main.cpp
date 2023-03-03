@@ -19,7 +19,7 @@ int main(){
 	file<<"500 500\n";
 	file<<"255\n";
 
-	Vec3f origin(0.0f, 0.0f, -6.0f); 
+	Vec3f origin(0.0f, 0.0f, -5.4f); 
 
 	for(int j = 0; j < image_height; j++){
 		for(int i = 0; i < image_width; i++){
@@ -29,7 +29,7 @@ int main(){
 			
 			float a = Vec3f::dot(ray, ray);
 			float b = 2 * Vec3f::dot(ray, origin);
-			float c = Vec3f::dot(origin, origin) - 16.0f;
+			float c = Vec3f::dot(origin, origin) - 29.0f;
 			
 			float discriminant = (b * b) - 4 * a * c;
 

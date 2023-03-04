@@ -1,3 +1,4 @@
 *.ppm
 build/
 !build/.gitkeep
+!build/*.json

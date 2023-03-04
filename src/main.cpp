@@ -16,13 +16,11 @@ void write(Vec3f color){
 }
 
 int main(){
-	GLFWwindow* window;
-	createWindow(window);
-
-	while(!glfwWindowShouldClose(window)){  //segfault
+	Window window = createWindow();
+	while(!glfwWindowShouldClose(window.window)){  //segfault
 		glClear(GL_COLOR_BUFFER_BIT);
 		glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
-		glfwSwapBuffers(window);
+		glfwSwapBuffers(window.window);
 		glfwPollEvents();
 	}
 

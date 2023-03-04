@@ -1,7 +1,7 @@
 [
 {
   "directory": "/home/extorc/dev/Enigma/build",
-  "command": "/usr/bin/c++  -I/home/extorc/dev/Enigma/src -I/home/extorc/dev/Enigma/glfw -I/home/extorc/dev/Enigma/GLAD -I/home/extorc/dev/Enigma/vendor/glfw/include -I/home/extorc/dev/Enigma/vendor/glad/include  -o CMakeFiles/Enigma.dir/src/main.cpp.o -c /home/extorc/dev/Enigma/src/main.cpp",
+  "command": "/usr/bin/c++  -I/home/extorc/dev/Enigma/src -I/home/extorc/dev/Enigma/glfw -I/home/extorc/dev/Enigma/GLAD -I/home/extorc/dev/Enigma/vendor/glfw/include -I/home/extorc/dev/Enigma/vendor/glad/include -I/home/extorc/dev/Enigma/vendor/glm  -o CMakeFiles/Enigma.dir/src/main.cpp.o -c /home/extorc/dev/Enigma/src/main.cpp",
   "file": "/home/extorc/dev/Enigma/src/main.cpp"
 },
 {

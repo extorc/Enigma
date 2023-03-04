@@ -2,6 +2,7 @@
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
 #include "Window.h"
+#include "Frame.h"
 
 Window createWindow(){
 	GLFWwindow* window;
@@ -13,5 +14,16 @@ Window createWindow(){
 	window = glfwCreateWindow(500, 500, "Enigma", NULL, NULL);
 	glfwMakeContextCurrent(window);
 	gladLoadGLLoader((GLADloadproc) glfwGetProcAddress);
+	glfwSwapInterval(1);
 	return Window{window, 500, 500};
+}
+
+Frame createTexture(){
+	Frame frame;
+	glGenTextures(1, &frame.texture);
+	glBindTexture(GL_TEXTURE_2D, frame.texture);
+	glGenFramebuffers(1, &frame.framebuffer);
+	glBindFramebuffer(GL_FRAMEBUFFER, frame.framebuffer);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, frame.texture, 0);
+	return frame;
 }

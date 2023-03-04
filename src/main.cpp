@@ -1,9 +1,13 @@
 #include <iostream>
+#include "Graphics.h"
 #include "Vec3.h"
 #include <fstream>
 #include <cstdio>
 #include <ostream>
 #include <string>
+#include "glad/glad.h"
+#include "GLFW/glfw3.h"
+
 
 std::ofstream file("../output.ppm");
 
@@ -12,6 +16,16 @@ void write(Vec3f color){
 }
 
 int main(){
+	GLFWwindow* window;
+	createWindow(window);
+
+	while(!glfwWindowShouldClose(window)){  //segfault
+		glClear(GL_COLOR_BUFFER_BIT);
+		glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
+		glfwSwapBuffers(window);
+		glfwPollEvents();
+	}
+
 	int image_height = 500;
 	int image_width = 500;
 
@@ -42,5 +56,6 @@ int main(){
 		}
 	}
 
+	glfwTerminate();
 	file.close();
 }

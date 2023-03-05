@@ -4,7 +4,7 @@ glm::vec4 processPixel(glm::vec3 rayOrigin, glm::vec3 rayDirection, glm::vec3 ob
 	float a = glm::dot(rayDirection, rayDirection);
 	float b = 2 * glm::dot(rayDirection, rayOrigin - objectPosition);
 	float c = glm::dot(rayOrigin, rayOrigin) 
-					- 81.0f 
+					- 1.0f 
 					- 2 * glm::dot(rayOrigin, objectPosition) 
 					+ glm::dot(objectPosition, objectPosition);
 

@@ -12,6 +12,29 @@
 #include "glm/glm.hpp"
 #include <vector>
 
+glm::vec4 processPixel(glm::vec3 rayOrigin, glm::vec3 rayDirection){
+	float a = glm::dot(rayDirection, rayDirection);
+	float b = 2 * glm::dot(rayDirection, rayOrigin);
+	float c = glm::dot(rayOrigin, rayOrigin) - 29.0f;
+
+	float discriminant = (b * b) - 4 * a * c;
+
+	if(discriminant >= 0){
+		float quadSol1 = ((b * -1) - std::sqrt(discriminant))/(2 * a);
+		float quadSol2 = ((b * -1) + std::sqrt(discriminant))/(2 * a);
+		
+		float t;
+		if(quadSol1 < 0)
+			t = quadSol2;
+		else
+			t = quadSol1;
+
+		glm::vec3 intercept = t * rayDirection + rayOrigin;
+		return glm::vec4(intercept, 1.0f);
+	}
+	else
+		return glm::vec4(0.0f);
+}
 int main(){
 	Window window = createWindow();
 	Frame frame = createTexture();
@@ -24,25 +47,9 @@ int main(){
 
 	for(int j = 0; j < image_height; j++){
 		for(int i = 0; i < image_width; i++){
-			glm::vec3 pixel(i-250, 250-j, 0);
+			glm::vec3 pixel(i-250, j-250, 0);
 			glm::vec3 ray = pixel - origin;
-
-			float a = glm::dot(ray, ray);
-			float b = 2 * glm::dot(ray, origin);
-			float c = glm::dot(origin, origin) - 29.0f;
-			
-			float discriminant = (b * b) - 4 * a * c;
-
-			if(discriminant >= 0){
-				float quadSol = ((b * -1) - std::sqrt(discriminant))/(2 * a);
-				glm::vec3 normal = glm::normalize((quadSol * glm::normalize(ray)) - glm::vec3(0.0f));
-				normal = 0.5f * normal + 0.5f;
-				std::cout<<normal.x << " " << normal.y << " " << normal.z<<std::endl;
-				pixels.push_back(glm::vec4(normal.x, normal.y, normal.z, 1.0f));
-			}
-			else{
-				pixels.push_back(glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
-			}
+			pixels.push_back(processPixel(origin,glm::normalize(ray)));
 		}
 	}
 

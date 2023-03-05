@@ -1,11 +1,5 @@
-#include <cmath>
-#include <iostream>
 #include "Frame.h"
 #include "Graphics.h"
-#include <fstream>
-#include <cstdio>
-#include <ostream>
-#include <string>
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
 #include "glm/fwd.hpp"
@@ -27,7 +21,7 @@ int main(){
 
 	for(int j = 0; j < image_height; j++){
 		for(int i = 0; i < image_width; i++){
-			glm::vec3 pixel(i-250, j-250, 129.4f); //Z coord is foud by hit and trial to be good enough for zooming in on the sphere at this potiion. It only affects field of view
+			glm::vec3 pixel(i-250, j-250, 129.4f); //Z coord only changes FOV
 			glm::vec3 ray = pixel - origin;
 			pixels.push_back(processPixel(origin, glm::normalize(ray), sphere));
 		}

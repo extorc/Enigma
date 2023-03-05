@@ -1,7 +1,6 @@
 #pragma once
 #include "glm/fwd.hpp"
 #include <glad/glad.h>
-#include <glad/glad.h>
 #include <vector>
 
 struct Frame{

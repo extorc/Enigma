@@ -1,5 +1,4 @@
-#include "Frame.h"
-
+#include "Blit.h"
 
 void blitFrame(Frame frame, int u, int v, std::vector<glm::vec4> pixels){
 	glBindTexture(GL_TEXTURE_2D, frame.texture);

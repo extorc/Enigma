@@ -8,6 +8,7 @@
 #include "glm/glm.hpp"
 #include <vector>
 #include "Renderer.h"
+#include "Blit.h"
 
 int main(){
 	Window window = createWindow();

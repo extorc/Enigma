@@ -1,8 +1,13 @@
 [
 {
   "directory": "/home/extorc/dev/Enigma/build",
-  "command": "/usr/bin/c++  -I/home/extorc/dev/Enigma/src -I/home/extorc/dev/Enigma/glfw -I/home/extorc/dev/Enigma/GLAD -I/home/extorc/dev/Enigma/vendor/glfw/include -I/home/extorc/dev/Enigma/vendor/glad/include -I/home/extorc/dev/Enigma/vendor/glm -g -o CMakeFiles/Enigma.dir/src/Frame.cpp.o -c /home/extorc/dev/Enigma/src/Frame.cpp",
-  "file": "/home/extorc/dev/Enigma/src/Frame.cpp"
+  "command": "/usr/bin/c++  -I/home/extorc/dev/Enigma/src -I/home/extorc/dev/Enigma/glfw -I/home/extorc/dev/Enigma/GLAD -I/home/extorc/dev/Enigma/vendor/glfw/include -I/home/extorc/dev/Enigma/vendor/glad/include -I/home/extorc/dev/Enigma/vendor/glm -g -o CMakeFiles/Enigma.dir/src/Blit.cpp.o -c /home/extorc/dev/Enigma/src/Blit.cpp",
+  "file": "/home/extorc/dev/Enigma/src/Blit.cpp"
+},
+{
+  "directory": "/home/extorc/dev/Enigma/build",
+  "command": "/usr/bin/c++  -I/home/extorc/dev/Enigma/src -I/home/extorc/dev/Enigma/glfw -I/home/extorc/dev/Enigma/GLAD -I/home/extorc/dev/Enigma/vendor/glfw/include -I/home/extorc/dev/Enigma/vendor/glad/include -I/home/extorc/dev/Enigma/vendor/glm -g -o CMakeFiles/Enigma.dir/src/Graphics.cpp.o -c /home/extorc/dev/Enigma/src/Graphics.cpp",
+  "file": "/home/extorc/dev/Enigma/src/Graphics.cpp"
 },
 {
   "directory": "/home/extorc/dev/Enigma/build",

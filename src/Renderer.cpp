@@ -1,6 +1,11 @@
 #include "Renderer.h"
+#include "glm/common.hpp"
+#include "glm/geometric.hpp"
 
-glm::vec4 processPixel(glm::vec3 rayOrigin, glm::vec3 rayDirection, glm::vec3 objectPosition){
+glm::vec4 processPixel(glm::vec3 rayOrigin, glm::vec3 rayDirection, glm::vec3 objectPosition, glm::vec3 objectColor){
+
+	glm::vec3 light = glm::normalize(glm::vec3(-1, -1, -1));
+
 	float a = glm::dot(rayDirection, rayDirection);
 	float b = 2 * glm::dot(rayDirection, rayOrigin - objectPosition);
 	float c = glm::dot(rayOrigin, rayOrigin) 
@@ -32,7 +37,10 @@ glm::vec4 processPixel(glm::vec3 rayOrigin, glm::vec3 rayDirection, glm::vec3 ob
 			t = quadSol1;
 
 		glm::vec3 intercept = t * rayDirection + rayOrigin;
-		return glm::vec4(intercept, 1.0f);
+		glm::vec3 normal = glm::normalize(intercept - objectPosition);
+		
+		float d = glm::max(glm::dot(normal, -light), 0.0f);
+		return glm::vec4(d * objectColor, 1.0f);
 	}
 	else
 		return glm::vec4(0.0f);

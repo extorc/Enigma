@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
 #include "Window.h"
@@ -14,7 +15,6 @@ Window createWindow(){
 	window = glfwCreateWindow(500, 500, "Enigma", NULL, NULL);
 	glfwMakeContextCurrent(window);
 	gladLoadGLLoader((GLADloadproc) glfwGetProcAddress);
-	glfwSwapInterval(1);
 	return Window{window, 500, 500};
 }
 

@@ -27,8 +27,10 @@ int main(){
 
 		for(int j = 0; j < image_height; j++){
 			for(int i = 0; i < image_width; i++){
-				glm::vec3 pixel(i-250, j-250, -500.0f); //Z coord only changes FOV
-				glm::vec3 ray = pixel - origin;
+				glm::vec3 ndc((float)i/(float)image_width, (float)j/(float)image_height, 0.5f); //Z coord only changes FOV
+				glm::vec3 screen = ndc * 2.0f - 1.0f; 
+
+				glm::vec3 ray = screen - origin;
 				pixels.push_back(processPixel(origin, glm::normalize(ray), sphere, objectColor));
 			}
 		}

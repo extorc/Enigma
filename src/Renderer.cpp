@@ -1,16 +1,14 @@
 #include "Renderer.h"
-#include "glm/common.hpp"
-#include "glm/geometric.hpp"
 
-glm::vec4 processPixel(glm::vec3 rayOrigin, glm::vec3 rayDirection, glm::vec3 objectPosition, glm::vec3 objectColor){
+glm::vec4 processPixel(Ray ray, glm::vec3 objectPosition, glm::vec3 objectColor){
 
 	glm::vec3 light = glm::normalize(glm::vec3(-1, -1, -1));
 
-	float a = glm::dot(rayDirection, rayDirection);
-	float b = 2 * glm::dot(rayDirection, rayOrigin - objectPosition);
-	float c = glm::dot(rayOrigin, rayOrigin) 
+	float a = glm::dot(ray.rayDirection, ray.rayDirection);
+	float b = 2 * glm::dot(ray.rayDirection, ray.origin - objectPosition);
+	float c = glm::dot(ray.origin, ray.origin) 
 					- 1.0f 
-					- 2 * glm::dot(rayOrigin, objectPosition) 
+					- 2 * glm::dot(ray.origin, objectPosition) 
 					+ glm::dot(objectPosition, objectPosition);
 
 	/*Quadratic equation of the sphere is foudn to be
@@ -36,7 +34,7 @@ glm::vec4 processPixel(glm::vec3 rayOrigin, glm::vec3 rayDirection, glm::vec3 ob
 		else
 			t = quadSol1;
 
-		glm::vec3 intercept = t * rayDirection + rayOrigin;
+		glm::vec3 intercept = t * ray.rayDirection + ray.origin;
 		glm::vec3 normal = glm::normalize(intercept - objectPosition);
 		
 		float d = glm::max(glm::dot(normal, -light), 0.0f);

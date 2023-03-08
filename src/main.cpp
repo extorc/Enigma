@@ -5,6 +5,7 @@
 //Vendor
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
+#include "glm/ext/quaternion_geometric.hpp"
 #include "glm/glm.hpp"
 
 //Enigma
@@ -13,6 +14,7 @@
 #include "Renderer.h"
 #include "Blit.h"
 #include "Camera.h"
+#include "Ray.h"
 
 int main(){
 	Window window = createWindow();
@@ -34,11 +36,13 @@ int main(){
 
 		for(int j = 0; j < image_height; j++){
 			for(int i = 0; i < image_width; i++){
-				glm::vec3 ray = camera.rayDirections[j * image_width + i];
-				pixels.push_back(processPixel(origin, glm::normalize(ray), sphere, objectColor));
+				Ray ray = {glm::normalize(camera.rayDirections[j * image_width + i]), camera.cameraPosition};
+				pixels.push_back(processPixel(ray, sphere, objectColor));
 			}
 		}
-		camera.rotateCamera(0.01f, 0.01f);
+		camera.rotateCamera(0.1f, 0.1f);
+		camera.translateCamera(glm::vec3(-0.4f, -0.4f, 0));
+		camera.calculateRayDirections();
 		blitFrame(frame, image_width, image_height, pixels);
 		glfwSwapBuffers(window.window);
 		glfwPollEvents();

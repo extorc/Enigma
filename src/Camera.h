@@ -16,4 +16,5 @@ class Camera{
 		void calculateRayDirections();
 		glm::mat4 getInverseMatrix();
 		void rotateCamera(float pitch, float yaw);
+		void translateCamera(glm::vec3 t);
 };

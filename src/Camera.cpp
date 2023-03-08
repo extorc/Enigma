@@ -23,5 +23,8 @@ glm::mat4 Camera::getInverseMatrix(){
 void Camera::rotateCamera(float pitch, float yaw){
 	glm::quat q= glm::normalize(glm::cross(glm::angleAxis(-pitch, glm::cross(forwardDirection, upDirection)), glm::angleAxis(yaw, upDirection)));
 	forwardDirection = glm::rotate(q, forwardDirection);
-	calculateRayDirections();
+}
+
+void Camera::translateCamera(glm::vec3 t){
+	cameraPosition = cameraPosition + t;
 }

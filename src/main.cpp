@@ -38,6 +38,7 @@ int main(){
 				pixels.push_back(processPixel(origin, glm::normalize(ray), sphere, objectColor));
 			}
 		}
+		camera.rotateCamera(0.01f, 0.01f);
 		blitFrame(frame, image_width, image_height, pixels);
 		glfwSwapBuffers(window.window);
 		glfwPollEvents();

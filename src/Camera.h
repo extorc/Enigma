@@ -10,8 +10,10 @@ class Camera{
 		int v;
 		glm::vec3 cameraPosition;
 		glm::vec3 forwardDirection = glm::vec3(0, 0, -1);
+		glm::vec3 upDirection = glm::vec3(0, -1, 0);
 		std::vector<glm::vec3> rayDirections;
 
 		void calculateRayDirections();
 		glm::mat4 getInverseMatrix();
+		void rotateCamera(float pitch, float yaw);
 };

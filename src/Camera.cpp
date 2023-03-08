@@ -1,6 +1,11 @@
 #include "Camera.h"
+#include "glm/ext/matrix_transform.hpp"
+#include "glm/fwd.hpp"
+#include <glm/gtc/quaternion.hpp>
+#include <glm/gtx/quaternion.hpp>
 
 void Camera::calculateRayDirections(){
+	rayDirections.clear();
 	for(int j = 0; j < v; j++){
 		for(int i = 0; i < u; i++){
 			glm::vec2 ndc((float)i/(float)u, (float)j/(float)v);
@@ -12,5 +17,11 @@ void Camera::calculateRayDirections(){
 }
 
 glm::mat4 Camera::getInverseMatrix(){
-	return glm::inverse(glm::lookAt(cameraPosition, cameraPosition + forwardDirection, glm::vec3(0, -1, 0)));
+	return glm::inverse(glm::lookAt(cameraPosition, cameraPosition + forwardDirection, upDirection));
+}
+
+void Camera::rotateCamera(float pitch, float yaw){
+	glm::quat q= glm::normalize(glm::cross(glm::angleAxis(-pitch, glm::cross(forwardDirection, upDirection)), glm::angleAxis(yaw, upDirection)));
+	forwardDirection = glm::rotate(q, forwardDirection);
+	calculateRayDirections();
 }

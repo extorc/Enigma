@@ -33,15 +33,13 @@ int main(){
 	camera.calculateRayDirections();
 	while(!glfwWindowShouldClose(window.window)){
 		pixels.clear();
-
+		camera.cameraInput(window.window);	
 		for(int j = 0; j < image_height; j++){
 			for(int i = 0; i < image_width; i++){
 				Ray ray = {glm::normalize(camera.rayDirections[j * image_width + i]), camera.cameraPosition};
 				pixels.push_back(processPixel(ray, sphere, objectColor));
 			}
 		}
-		camera.rotateCamera(0.1f, 0.1f);
-		camera.translateCamera(glm::vec3(-0.4f, -0.4f, 0));
 		camera.calculateRayDirections();
 		blitFrame(frame, image_width, image_height, pixels);
 		glfwSwapBuffers(window.window);

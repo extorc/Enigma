@@ -28,3 +28,35 @@ void Camera::rotateCamera(float pitch, float yaw){
 void Camera::translateCamera(glm::vec3 t){
 	cameraPosition = cameraPosition + t;
 }
+void Camera::cameraInput(GLFWwindow* window){
+	if(glfwGetKey(window, GLFW_KEY_S)){
+		translateCamera(glm::vec3(0, 0, 0.4f));
+	}
+	if(glfwGetKey(window, GLFW_KEY_A)){
+		translateCamera(glm::vec3(-0.4f, 0, 0));
+	}
+	if(glfwGetKey(window, GLFW_KEY_W)){
+		translateCamera(glm::vec3(0, 0, -0.4f));
+	}
+	if(glfwGetKey(window, GLFW_KEY_D)){
+		translateCamera(glm::vec3(0.4f, 0, 0));
+	}
+	if(glfwGetKey(window, GLFW_KEY_UP)){
+		rotateCamera(0.4f, 0);
+	}
+	if(glfwGetKey(window, GLFW_KEY_DOWN)){
+		rotateCamera(-0.4f, 0);
+	}
+	if(glfwGetKey(window, GLFW_KEY_LEFT)){
+		rotateCamera(0, 0.4f);
+	}
+	if(glfwGetKey(window, GLFW_KEY_RIGHT)){
+		rotateCamera(0, -0.4f);
+	}
+	if(glfwGetKey(window, GLFW_KEY_Q)){
+		translateCamera(glm::vec3(0, 0.4f, 0));
+	}
+	if(glfwGetKey(window, GLFW_KEY_E)){
+		translateCamera(glm::vec3(0, -0.4f, 0));
+	}
+}

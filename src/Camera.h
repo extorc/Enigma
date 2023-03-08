@@ -2,6 +2,7 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include <vector>
+#include "GLFW/glfw3.h"
 
 class Camera{
 	public:
@@ -17,4 +18,5 @@ class Camera{
 		glm::mat4 getInverseMatrix();
 		void rotateCamera(float pitch, float yaw);
 		void translateCamera(glm::vec3 t);
+		void cameraInput(GLFWwindow* window);
 };

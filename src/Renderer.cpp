@@ -1,17 +1,14 @@
 #include "Renderer.h"
-#include <cfloat>
-#include <iostream>
-#include "glm/gtx/string_cast.hpp"
+#include <climits>
 
-glm::vec4 processPixel(Ray ray, Scene& scene){
+glm::vec4 processPixel(Ray& ray, Scene& scene){
 
 	glm::vec3 light = glm::normalize(glm::vec3(-1, -1, -1));
 	float closestT = FLT_MAX;
-	Sphere* closestSphere = nullptr;
-	glm::vec3 closestSpherePosition;
-	glm::vec3 closestSphereAlbedo;
+	int closestSphereIndex = INT_MAX;
 
-	for(Sphere sphere : scene.spheres){
+	for(int i = 0; i < scene.spheres.size(); i++){
+		Sphere sphere = scene.spheres[i];
 		//A is direction.direction which is 1 for normalised vectors
 		float halfB = glm::dot(ray.rayDirection, ray.origin - sphere.position);
 		float c = glm::dot(ray.origin - sphere.position, ray.origin - sphere.position) - sphere.radius * sphere.radius;
@@ -40,19 +37,17 @@ glm::vec4 processPixel(Ray ray, Scene& scene){
 				t = quadSol1;
 			if(t < closestT){
 				closestT = t;
-				closestSphere = &sphere;
-				closestSpherePosition = sphere.position;
-				closestSphereAlbedo = sphere.Albedo;
+				closestSphereIndex = i;
 			}
 		}
 	}
-	if(closestSphere == nullptr)
+	if(closestSphereIndex == INT_MAX)
 		return glm::vec4(0.0f);
 	else{
 		glm::vec3 intercept = closestT * ray.rayDirection + ray.origin;
-		glm::vec3 normal = glm::normalize(intercept - closestSpherePosition);
+		glm::vec3 normal = glm::normalize(intercept -scene.spheres[closestSphereIndex].position);
 
 		float d = glm::max(glm::dot(normal, -light), 0.0f);
-		return glm::vec4(d * closestSphereAlbedo, 1.0f);	
+		return glm::vec4(d * scene.spheres[closestSphereIndex].Albedo, 1.0f);	
 	}
 }

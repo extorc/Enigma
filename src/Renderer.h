@@ -6,4 +6,4 @@
 #include "glm/common.hpp"
 #include "glm/geometric.hpp"
 
-glm::vec4 processPixel(Ray ray, Scene& scene);
+glm::vec4 processPixel(Ray& ray, Scene& scene);

@@ -1,15 +1,14 @@
 #include "Renderer.h"
 
-glm::vec4 processPixel(Ray ray, glm::vec3 objectPosition, glm::vec3 objectColor){
+glm::vec4 processPixel(Ray ray, Scene& scene){
 
 	glm::vec3 light = glm::normalize(glm::vec3(-1, -1, -1));
+	
+	Sphere sphere = scene.spheres[0];
 
 	float a = glm::dot(ray.rayDirection, ray.rayDirection);
-	float b = 2 * glm::dot(ray.rayDirection, ray.origin - objectPosition);
-	float c = glm::dot(ray.origin, ray.origin) 
-					- 1.0f 
-					- 2 * glm::dot(ray.origin, objectPosition) 
-					+ glm::dot(objectPosition, objectPosition);
+	float b = 2 * glm::dot(ray.rayDirection, ray.origin - sphere.position);
+	float c = glm::dot(ray.origin - sphere.position, ray.origin - sphere.position) - 1.0f;
 
 	/*Quadratic equation of the sphere is foudn to be
 
@@ -35,10 +34,10 @@ glm::vec4 processPixel(Ray ray, glm::vec3 objectPosition, glm::vec3 objectColor)
 			t = quadSol1;
 
 		glm::vec3 intercept = t * ray.rayDirection + ray.origin;
-		glm::vec3 normal = glm::normalize(intercept - objectPosition);
+		glm::vec3 normal = glm::normalize(intercept - sphere.position);
 		
 		float d = glm::max(glm::dot(normal, -light), 0.0f);
-		return glm::vec4(d * objectColor, 1.0f);
+		return glm::vec4(d * sphere.Albedo, 1.0f);
 	}
 	else
 		return glm::vec4(0.0f);

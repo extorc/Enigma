@@ -15,21 +15,21 @@
 #include "Blit.h"
 #include "Camera.h"
 #include "Ray.h"
+#include "Scene.h"
+#include "Sphere.h"
 
 int main(){
 	Window window = createWindow();
 	Frame frame = createTexture();
-	glm::vec3 origin(0.0f, 0.0f, 3.0f);
+	Scene scene;
+	scene.spheres.push_back({{0, 0, -1}, 1.0f, {1, 0, 1}});
 
-	Camera camera(origin, 500, 500);
+	Camera camera({0, 0, 3}, 500, 500);
 	std::vector<glm::vec4> pixels;
 
 	int image_height = window.height;
 	int image_width = window.width;
 
-	glm::vec3 sphere(0.0f, 0.0f, -1.0f);
-	glm::vec3 objectColor(1, 0, 1);
-	
 	camera.calculateRayDirections();
 	while(!glfwWindowShouldClose(window.window)){
 		pixels.clear();
@@ -37,7 +37,7 @@ int main(){
 		for(int j = 0; j < image_height; j++){
 			for(int i = 0; i < image_width; i++){
 				Ray ray = {glm::normalize(camera.rayDirections[j * image_width + i]), camera.cameraPosition};
-				pixels.push_back(processPixel(ray, sphere, objectColor));
+				pixels.push_back(processPixel(ray, scene));
 			}
 		}
 		camera.calculateRayDirections();

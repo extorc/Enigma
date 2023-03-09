@@ -1,14 +1,14 @@
 #include "Renderer.h"
+#include <iostream>
 
 glm::vec4 processPixel(Ray ray, Scene& scene){
 
 	glm::vec3 light = glm::normalize(glm::vec3(-1, -1, -1));
 	
 	Sphere sphere = scene.spheres[0];
-
-	float a = glm::dot(ray.rayDirection, ray.rayDirection);
-	float b = 2 * glm::dot(ray.rayDirection, ray.origin - sphere.position);
-	float c = glm::dot(ray.origin - sphere.position, ray.origin - sphere.position) - 1.0f;
+	//A is direction.direction which is 1 for normalised vectors
+	float halfB = glm::dot(ray.rayDirection, ray.origin - sphere.position);
+	float c = glm::dot(ray.origin - sphere.position, ray.origin - sphere.position) - sphere.radius * sphere.radius;
 
 	/*Quadratic equation of the sphere is foudn to be
 
@@ -21,12 +21,13 @@ glm::vec4 processPixel(Ray ray, Scene& scene){
 	const	  T^2 term    T term    const     T term   const
                                                    
 		*/                                             
-	float discriminant = (b * b) - 4 * a * c;
-
+	float discriminant = (halfB * halfB) - c;
+	//-b +/- sqrt(b^2-4c) /2 = -halfB +/- sqrt(halfB^2 - c) 
 	if(discriminant >= 0){
-		float quadSol1 = ((b * -1) - std::sqrt(discriminant))/(2 * a);
-		float quadSol2 = ((b * -1) + std::sqrt(discriminant))/(2 * a);
+		float quadSol1 = -halfB - std::sqrt(discriminant);
+		float quadSol2 = -halfB + std::sqrt(discriminant);
 		
+		//std::cout<< quadSol1 << " " << quadSol2 << std::endl;
 		float t;
 		if(quadSol1 < 0)
 			t = quadSol2;

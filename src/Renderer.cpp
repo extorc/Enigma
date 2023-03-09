@@ -27,7 +27,6 @@ glm::vec4 processPixel(Ray ray, Scene& scene){
 		float quadSol1 = -halfB - std::sqrt(discriminant);
 		float quadSol2 = -halfB + std::sqrt(discriminant);
 		
-		//std::cout<< quadSol1 << " " << quadSol2 << std::endl;
 		float t;
 		if(quadSol1 < 0)
 			t = quadSol2;

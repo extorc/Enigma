@@ -23,8 +23,8 @@ int main(){
 	Window window = createWindow();
 	Frame frame = createTexture();
 	Scene scene;
-	scene.spheres.push_back({{0, 0, -1}, 1.0f, {1, 0, 1}});
-	scene.spheres.push_back({{1, 0, -2}, 0.5f, {1, 1, 0}});
+	scene.spheres.push_back({{0, -10, -1}, 10.0f, {0, 0, 1}});
+	scene.spheres.push_back({{0, 1, -1}, 1.0f, {1, 0, 0.5f}});
 
 	Camera camera({0, 0, 3}, 500, 500);
 	Renderer renderer(camera, scene);

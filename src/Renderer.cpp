@@ -1,5 +1,6 @@
 #include "Renderer.h"
 #include <climits>
+#include <cmath>
 
 HitData Renderer::trace(Ray& ray){
 	float closestT = FLT_MAX;
@@ -59,13 +60,21 @@ HitData Renderer::miss(){
 	data.objectIndex = -1;
 	return data;
 }
-glm::vec4 Renderer::processPixel(Ray& ray){
-	HitData data = trace(ray);
+glm::vec4 Renderer::processPixel(Ray ray){
+	glm::vec4 finalColor(0.0f);
+	int bounces = 2;
 	glm::vec3 light = glm::normalize(glm::vec3(-1, -1, -1));
 
-	if(data.objectIndex < 0)
-		return glm::vec4(0.0f);
-
-	float d = glm::max(glm::dot(data.normal, -light), 0.0f);
-	return glm::vec4(d * scene.spheres[data.objectIndex].Albedo, 1.0f);	
+	for(int i = 0; i < bounces; i++){
+		HitData data = trace(ray);
+		if(data.objectIndex < 0)
+			finalColor += glm::vec4(0);
+		else{
+			float d = glm::max(glm::dot(data.normal, -light), 0.0f);
+			finalColor += glm::vec4(d * scene.spheres[data.objectIndex].Albedo, 1.0f) * (float)std::pow(0.7, i);
+			ray.origin = data.position + data.normal * 0.001f;
+			ray.rayDirection = glm::reflect(ray.rayDirection, data.normal);
+		}
+	}
+	return finalColor;	
 }

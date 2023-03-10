@@ -17,6 +17,7 @@
 #include "Ray.h"
 #include "Scene.h"
 #include "Sphere.h"
+#include "Renderer.h"
 
 int main(){
 	Window window = createWindow();
@@ -26,6 +27,7 @@ int main(){
 	scene.spheres.push_back({{1, 0, -2}, 0.5f, {1, 1, 0}});
 
 	Camera camera({0, 0, 3}, 500, 500);
+	Renderer renderer(camera, scene);
 	std::vector<glm::vec4> pixels;
 
 	int image_height = window.height;
@@ -38,7 +40,7 @@ int main(){
 		for(int j = 0; j < image_height; j++){
 			for(int i = 0; i < image_width; i++){
 				Ray ray = {glm::normalize(camera.rayDirections[j * image_width + i]), camera.cameraPosition};
-				pixels.push_back(processPixel(ray, scene));
+				pixels.push_back(renderer.processPixel(ray));
 			}
 		}
 		camera.calculateRayDirections();

@@ -5,5 +5,18 @@
 #include "Ray.h"
 #include "glm/common.hpp"
 #include "glm/geometric.hpp"
+#include "Camera.h"
+#include "HitData.h"
 
-glm::vec4 processPixel(Ray& ray, Scene& scene);
+class Renderer{
+	public:
+		Renderer(Camera camera, Scene scene):camera(camera), scene(scene){}
+		glm::vec4 processPixel(Ray& ray);
+	private:
+		HitData trace();
+		HitData miss();
+		HitData hit();
+
+		Camera camera;
+		Scene scene;
+};

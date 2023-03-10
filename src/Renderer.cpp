@@ -1,8 +1,7 @@
 #include "Renderer.h"
 #include <climits>
 
-glm::vec4 processPixel(Ray& ray, Scene& scene){
-
+glm::vec4 Renderer::processPixel(Ray& ray){
 	glm::vec3 light = glm::normalize(glm::vec3(-1, -1, -1));
 	float closestT = FLT_MAX;
 	int closestSphereIndex = INT_MAX;

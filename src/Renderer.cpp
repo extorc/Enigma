@@ -29,9 +29,11 @@ HitData Renderer::trace(Ray& ray){
 			float quadSol2 = -halfB + std::sqrt(discriminant);
 
 			float t;
-			if(quadSol1 < 0)
+			if(quadSol1 < 0 && quadSol2 < 0)
+				continue;
+			else if(quadSol1 < 0)
 				t = quadSol2;
-			else
+			else 
 				t = quadSol1;
 			if(t < closestT){
 				closestT = t;

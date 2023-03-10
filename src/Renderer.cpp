@@ -1,10 +1,9 @@
 #include "Renderer.h"
 #include <climits>
 
-glm::vec4 Renderer::processPixel(Ray& ray){
-	glm::vec3 light = glm::normalize(glm::vec3(-1, -1, -1));
+HitData Renderer::trace(Ray& ray){
 	float closestT = FLT_MAX;
-	int closestSphereIndex = INT_MAX;
+	int closestSphereIndex = -1;
 
 	for(int i = 0; i < scene.spheres.size(); i++){
 		Sphere sphere = scene.spheres[i];
@@ -22,7 +21,7 @@ glm::vec4 Renderer::processPixel(Ray& ray){
 			|        |         |         |         |       | 
 			const	  T^2 term    T term    const     T term   const
 
-		*/                                             
+*/                                             
 		float discriminant = (halfB * halfB) - c;
 		//-b +/- sqrt(b^2-4c) /2 = -halfB +/- sqrt(halfB^2 - c) 
 		if(discriminant >= 0){
@@ -40,13 +39,31 @@ glm::vec4 Renderer::processPixel(Ray& ray){
 			}
 		}
 	}
-	if(closestSphereIndex == INT_MAX)
-		return glm::vec4(0.0f);
-	else{
-		glm::vec3 intercept = closestT * ray.rayDirection + ray.origin;
-		glm::vec3 normal = glm::normalize(intercept -scene.spheres[closestSphereIndex].position);
+	if(closestSphereIndex < 0)
+		return miss();
+	return hit(ray, closestT, closestSphereIndex);
+}
 
-		float d = glm::max(glm::dot(normal, -light), 0.0f);
-		return glm::vec4(d * scene.spheres[closestSphereIndex].Albedo, 1.0f);	
-	}
+HitData Renderer::hit(Ray& ray, float hitDistance, int objectIndex){
+	HitData data;
+	data.hitDistance = hitDistance;
+	data.objectIndex = objectIndex;
+	data.position = hitDistance * ray.rayDirection + ray.origin;
+	data.normal = glm::normalize(data.position - scene.spheres[objectIndex].position);
+	return data;
+}
+HitData Renderer::miss(){
+	HitData data;
+	data.objectIndex = -1;
+	return data;
+}
+glm::vec4 Renderer::processPixel(Ray& ray){
+	HitData data = trace(ray);
+	glm::vec3 light = glm::normalize(glm::vec3(-1, -1, -1));
+
+	if(data.objectIndex < 0)
+		return glm::vec4(0.0f);
+
+	float d = glm::max(glm::dot(data.normal, -light), 0.0f);
+	return glm::vec4(d * scene.spheres[data.objectIndex].Albedo, 1.0f);	
 }

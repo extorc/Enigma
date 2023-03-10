@@ -13,9 +13,9 @@ class Renderer{
 		Renderer(Camera camera, Scene scene):camera(camera), scene(scene){}
 		glm::vec4 processPixel(Ray& ray);
 	private:
-		HitData trace();
+		HitData trace(Ray& ray);
 		HitData miss();
-		HitData hit();
+		HitData hit(Ray& ray, float hitDistance, int objectIndex);
 
 		Camera camera;
 		Scene scene;

@@ -1,6 +1,8 @@
 #include "Renderer.h"
 #include <climits>
 #include <cmath>
+#include <iostream>
+#define RAND(X) static_cast <float> (rand()) / static_cast <float> (RAND_MAX)
 
 HitData Renderer::trace(Ray& ray){
 	float closestT = FLT_MAX;
@@ -62,18 +64,21 @@ HitData Renderer::miss(){
 }
 glm::vec4 Renderer::processPixel(Ray ray){
 	glm::vec4 finalColor(0.0f);
-	int bounces = 2;
+	int bounces = 5;
 	glm::vec3 light = glm::normalize(glm::vec3(-1, -1, -1));
+	glm::vec4 skyBox = {0.6f, 0.6f, 0.9f, 1.0f};
 
 	for(int i = 0; i < bounces; i++){
 		HitData data = trace(ray);
-		if(data.objectIndex < 0)
-			finalColor += glm::vec4(0);
+		if(data.objectIndex < 0){
+			finalColor += skyBox * (float)std::pow(0.5, i);
+			break;
+		}
 		else{
 			float d = glm::max(glm::dot(data.normal, -light), 0.0f);
-			finalColor += glm::vec4(d * scene.spheres[data.objectIndex].Albedo, 1.0f) * (float)std::pow(0.7, i);
+			finalColor += glm::vec4(d * scene.spheres[data.objectIndex].Albedo, 1.0f) * (float)std::pow(0.5, i);
 			ray.origin = data.position + data.normal * 0.001f;
-			ray.rayDirection = glm::reflect(ray.rayDirection, data.normal);
+			ray.rayDirection = glm::reflect(ray.rayDirection, data.normal + (scene.spheres[data.objectIndex].mat.roughness * glm::vec3(RAND(1.0f)-0.5f, RAND(1.0f)-0.5f, RAND(1.0f)-0.5f)));
 		}
 	}
 	return finalColor;	

@@ -23,10 +23,11 @@ int main(){
 	Window window = createWindow();
 	Frame frame = createTexture();
 	Scene scene;
-	scene.spheres.push_back({{0, -10, -1}, 10.0f, {0, 0, 1}});
-	scene.spheres.push_back({{0, 1, -1}, 1.0f, {1, 0, 0.5f}});
+	scene.spheres.push_back({{0, -101.5f, -1}, 100.0f, {0, 0, 1}});
+	scene.spheres.push_back({{0, 0.5f, -1}, 2.0f, {1, 0, 0.5f}});
+	scene.spheres[1].mat.roughness = 1;
 
-	Camera camera({0, 0, 3}, 500, 500);
+	Camera camera({0, 0, 5}, 500, 500);
 	Renderer renderer(camera, scene);
 	std::vector<glm::vec4> pixels;
 

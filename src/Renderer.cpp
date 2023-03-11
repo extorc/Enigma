@@ -81,5 +81,6 @@ glm::vec4 Renderer::processPixel(Ray ray){
 			ray.rayDirection = glm::reflect(ray.rayDirection, data.normal + (scene.materialList[scene.spheres[data.objectIndex].matIndex].roughness * glm::vec3(RAND(1.0f)-0.5f, RAND(1.0f)-0.5f, RAND(1.0f)-0.5f)));
 		}
 	}
+
 	return finalColor;	
 }

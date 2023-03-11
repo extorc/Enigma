@@ -33,20 +33,29 @@ int main(){
 	Camera camera({0, 0, 5}, 500, 500);
 	Renderer renderer(camera, scene);
 	std::vector<glm::vec4> pixels;
+	pixels.resize(camera.u * camera.v);
+	std::fill(pixels.begin(), pixels.end(), glm::vec4(0));
+	std::vector<glm::vec4> accumulation;
+	accumulation.resize(camera.u * camera.v);
+	std::fill(accumulation.begin(), accumulation.end(), glm::vec4(0));
 
 	int image_height = window.height;
 	int image_width = window.width;
 
+	int sampleCount = 1;
 	camera.calculateRayDirections();
 	while(!glfwWindowShouldClose(window.window)){
-		pixels.clear();
 		camera.cameraInput(window.window);	
 		for(int j = 0; j < image_height; j++){
 			for(int i = 0; i < image_width; i++){
 				Ray ray = {glm::normalize(camera.rayDirections[j * image_width + i]), camera.cameraPosition};
-				pixels.push_back(renderer.processPixel(ray));
+				auto color = renderer.processPixel(ray);
+				accumulation[j * camera.u + i] += color;
+				pixels[j * camera.u + i] = accumulation[j * camera.u + i]/(float)sampleCount;
 			}
 		}
+		sampleCount++;
+		std::cout<<sampleCount<<std::endl;
 		camera.calculateRayDirections();
 		blitFrame(frame, image_width, image_height, pixels);
 		glfwSwapBuffers(window.window);

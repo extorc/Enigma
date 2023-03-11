@@ -24,11 +24,11 @@ int main(){
 	Frame frame = createTexture();
 
 	Scene scene;
-	scene.spheres.push_back({{0, -101.5f, -1}, 100.0f, {0, 0, 1}, 0});
-	scene.spheres.push_back({{0, 0.5f, -1}, 2.0f, {1, 0, 0.5f}, 1});
+	scene.spheres.push_back({{0, -101.5f, -1}, 100.0f, 0});
+	scene.spheres.push_back({{0, 0.5f, -1}, 2.0f, 1});
 
-	scene.materialList.push_back({0.1f});
-	scene.materialList.push_back({1.0f});
+	scene.materialList.push_back({0.1f, {0, 0, 1}});
+	scene.materialList.push_back({1.0f, {1, 0, 0.5f}});
 
 	Camera camera({0, 0, 5}, 500, 500);
 	Renderer renderer(camera, scene);

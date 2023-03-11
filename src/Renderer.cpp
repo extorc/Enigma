@@ -78,7 +78,7 @@ glm::vec4 Renderer::processPixel(Ray ray){
 			float d = glm::max(glm::dot(data.normal, -light), 0.0f);
 			finalColor += glm::vec4(d * scene.spheres[data.objectIndex].Albedo, 1.0f) * (float)std::pow(0.5, i);
 			ray.origin = data.position + data.normal * 0.001f;
-			ray.rayDirection = glm::reflect(ray.rayDirection, data.normal + (scene.spheres[data.objectIndex].mat.roughness * glm::vec3(RAND(1.0f)-0.5f, RAND(1.0f)-0.5f, RAND(1.0f)-0.5f)));
+			ray.rayDirection = glm::reflect(ray.rayDirection, data.normal + (scene.materialList[scene.spheres[data.objectIndex].matIndex].roughness * glm::vec3(RAND(1.0f)-0.5f, RAND(1.0f)-0.5f, RAND(1.0f)-0.5f)));
 		}
 	}
 	return finalColor;	

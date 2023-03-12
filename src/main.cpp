@@ -24,8 +24,23 @@ int main(){
 	Frame frame = createTexture();
 
 	Scene scene;
-	scene.spheres.push_back({{0, -101.5f, -1}, 100.0f, 0});
-	scene.spheres.push_back({{0, 0.5f, -1}, 2.0f, 1});
+
+	{
+		Sphere sphere;
+		sphere.radius = 100;
+		sphere.position = {0, -101.5f, -1};
+		sphere.matIndex = 0;
+		scene.spheres.push_back(sphere);
+
+	}
+	{
+		Sphere sphere;
+		sphere.radius = 2;
+		sphere.position = {0, 0.5f, -1};
+		sphere.matIndex = 1;
+		scene.spheres.push_back(sphere);
+
+	}
 
 	scene.materialList.push_back({0.1f, {0, 0, 1}});
 	scene.materialList.push_back({1.0f, {1, 0, 0.5f}});

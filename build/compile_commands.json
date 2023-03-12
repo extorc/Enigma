@@ -21,6 +21,11 @@
 },
 {
   "directory": "/home/extorc/dev/Enigma/build",
+  "command": "/usr/bin/c++  -I/home/extorc/dev/Enigma/src -I/home/extorc/dev/Enigma/glfw -I/home/extorc/dev/Enigma/GLAD -I/home/extorc/dev/Enigma/vendor/glfw/include -I/home/extorc/dev/Enigma/vendor/glad/include -I/home/extorc/dev/Enigma/vendor/glm -g -o CMakeFiles/Enigma.dir/src/Sphere.cpp.o -c /home/extorc/dev/Enigma/src/Sphere.cpp",
+  "file": "/home/extorc/dev/Enigma/src/Sphere.cpp"
+},
+{
+  "directory": "/home/extorc/dev/Enigma/build",
   "command": "/usr/bin/c++  -I/home/extorc/dev/Enigma/src -I/home/extorc/dev/Enigma/glfw -I/home/extorc/dev/Enigma/GLAD -I/home/extorc/dev/Enigma/vendor/glfw/include -I/home/extorc/dev/Enigma/vendor/glad/include -I/home/extorc/dev/Enigma/vendor/glm -g -o CMakeFiles/Enigma.dir/src/main.cpp.o -c /home/extorc/dev/Enigma/src/main.cpp",
   "file": "/home/extorc/dev/Enigma/src/main.cpp"
 },

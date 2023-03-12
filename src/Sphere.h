@@ -7,8 +7,11 @@
 
 class Sphere : public Object{
 	public:
-		glm::vec3 position{0, 0, 0};
+		Sphere(glm::vec3 pos, float rad, int matI){
+			position = pos;
+			radius = rad;
+			matIndex = matI;
+		}
 		float radius = 1.0f;
-		int matIndex;
 		float intersect(Ray& ray);
 };

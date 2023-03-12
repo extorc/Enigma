@@ -25,28 +25,14 @@ int main(){
 
 	Scene scene;
 
-	{
-		Sphere sphere;
-		sphere.radius = 100;
-		sphere.position = {0, -101.5f, -1};
-		sphere.matIndex = 0;
-		scene.spheres.push_back(sphere);
-
-	}
-	{
-		Sphere sphere;
-		sphere.radius = 2;
-		sphere.position = {0, 0.5f, -1};
-		sphere.matIndex = 1;
-		scene.spheres.push_back(sphere);
-
-	}
+	scene.objects.push_back(std::unique_ptr<Object>(new Sphere({0, -101.5f, -1}, 100, 0)));
+	scene.objects.push_back(std::unique_ptr<Object>(new Sphere({0, 0.5f, -1}, 2, 1)));
 
 	scene.materialList.push_back({0.1f, {0, 0, 1}});
 	scene.materialList.push_back({1.0f, {1, 0, 0.5f}});
 
 	Camera camera({0, 0, 5}, 500, 500);
-	Renderer renderer(camera, scene);
+	Renderer renderer(camera, &scene);
 	std::vector<glm::vec4> pixels;
 	pixels.resize(camera.u * camera.v);
 	std::fill(pixels.begin(), pixels.end(), glm::vec4(0));

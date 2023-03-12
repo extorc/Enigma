@@ -8,9 +8,8 @@ HitData Renderer::trace(Ray& ray){
 	float closestT = FLT_MAX;
 	int closestSphereIndex = -1;
 
-	for(int i = 0; i < scene.spheres.size(); i++){
-		auto sphere = scene.spheres[i];
-		float t = sphere.intersect(ray);
+	for(int i = 0; i < scene->objects.size(); i++){
+		float t = scene->objects[i]->intersect(ray);
 		if(t < closestT && t > 0){
 			closestT = t;
 			closestSphereIndex = i;
@@ -26,7 +25,7 @@ HitData Renderer::hit(Ray& ray, float hitDistance, int objectIndex){
 	data.hitDistance = hitDistance;
 	data.objectIndex = objectIndex;
 	data.position = hitDistance * ray.rayDirection + ray.origin;
-	data.normal = glm::normalize(data.position - scene.spheres[objectIndex].position);
+	data.normal = glm::normalize(data.position - scene->objects[objectIndex]->position);
 	return data;
 }
 HitData Renderer::miss(){
@@ -48,9 +47,9 @@ glm::vec4 Renderer::processPixel(Ray ray){
 		}
 		else{
 			float d = glm::max(glm::dot(data.normal, -light), 0.0f);
-			finalColor += glm::vec4(d * scene.materialList[scene.spheres[data.objectIndex].matIndex].Albedo, 1.0f) * (float)std::pow(0.5, i);
+			finalColor += glm::vec4(d * scene->materialList[scene->objects[data.objectIndex]->matIndex].Albedo, 1.0f) * (float)std::pow(0.5, i);
 			ray.origin = data.position + data.normal * 0.001f;
-			ray.rayDirection = glm::reflect(ray.rayDirection, data.normal + (scene.materialList[scene.spheres[data.objectIndex].matIndex].roughness * glm::vec3(RAND(1.0f)-0.5f, RAND(1.0f)-0.5f, RAND(1.0f)-0.5f)));
+			ray.rayDirection = glm::reflect(ray.rayDirection, data.normal + (scene->materialList[scene->objects[data.objectIndex]->matIndex].roughness * glm::vec3(RAND(1.0f)-0.5f, RAND(1.0f)-0.5f, RAND(1.0f)-0.5f)));
 		}
 	}
 

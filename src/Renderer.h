@@ -15,7 +15,6 @@ class Renderer{
 	private:
 		HitData trace(Ray& ray);
 		HitData miss();
-		HitData hit(Ray& ray, float hitDistance, int objectIndex);
 
 		Camera camera;
 		Scene* scene;

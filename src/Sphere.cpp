@@ -1,6 +1,5 @@
 #include "Sphere.h"
 
-
 float Sphere::intersect(Ray& ray){
 
 	//A is direction.direction which is 1 for normalised vectors
@@ -34,4 +33,12 @@ float Sphere::intersect(Ray& ray){
 	}
 
 	return -1;
+}
+HitData Sphere::hit(Ray& ray, float hitDistance, int objectIndex){
+	HitData data;
+	data.hitDistance = hitDistance;
+	data.objectIndex = objectIndex;
+	data.position = hitDistance * ray.rayDirection + ray.origin;
+	data.normal = glm::normalize(data.position - position);
+	return data;
 }

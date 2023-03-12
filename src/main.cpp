@@ -3,6 +3,7 @@
 #include <vector>
 
 //Vendor
+#include "Plane.h"
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
 #include "glm/ext/quaternion_geometric.hpp"
@@ -25,7 +26,7 @@ int main(){
 
 	Scene scene;
 
-	scene.objects.push_back(std::unique_ptr<Object>(new Sphere({0, -101.5f, -1}, 100, 0)));
+	scene.objects.push_back(std::unique_ptr<Object>(new Plane({0, 0, 0}, {0, -1.5f, 0}, {0, 1, 0}, 0)));
 	scene.objects.push_back(std::unique_ptr<Object>(new Sphere({0, 0.5f, -1}, 2, 1)));
 
 	scene.materialList.push_back({0.1f, {0, 0, 1}});

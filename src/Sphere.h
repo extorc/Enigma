@@ -4,6 +4,7 @@
 #include "Ray.h"
 #include "glm/glm.hpp"
 #include "Object.h"
+#include "HitData.h"
 
 class Sphere : public Object{
 	public:
@@ -14,4 +15,5 @@ class Sphere : public Object{
 		}
 		float radius = 1.0f;
 		float intersect(Ray& ray);
+		HitData hit(Ray& ray, float hitDistance, int objectIndex);
 };

@@ -17,17 +17,9 @@ HitData Renderer::trace(Ray& ray){
 	}
 	if(closestSphereIndex < 0)
 		return miss();
-	return hit(ray, closestT, closestSphereIndex);
+	return scene->objects[closestSphereIndex]->hit(ray, closestT, closestSphereIndex);
 }
 
-HitData Renderer::hit(Ray& ray, float hitDistance, int objectIndex){
-	HitData data;
-	data.hitDistance = hitDistance;
-	data.objectIndex = objectIndex;
-	data.position = hitDistance * ray.rayDirection + ray.origin;
-	data.normal = glm::normalize(data.position - scene->objects[objectIndex]->position);
-	return data;
-}
 HitData Renderer::miss(){
 	HitData data;
 	data.objectIndex = -1;

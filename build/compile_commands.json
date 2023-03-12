@@ -16,6 +16,11 @@
 },
 {
   "directory": "/home/extorc/dev/Enigma/build",
+  "command": "/usr/bin/c++  -I/home/extorc/dev/Enigma/src -I/home/extorc/dev/Enigma/glfw -I/home/extorc/dev/Enigma/GLAD -I/home/extorc/dev/Enigma/vendor/glfw/include -I/home/extorc/dev/Enigma/vendor/glad/include -I/home/extorc/dev/Enigma/vendor/glm -g -o CMakeFiles/Enigma.dir/src/Plane.cpp.o -c /home/extorc/dev/Enigma/src/Plane.cpp",
+  "file": "/home/extorc/dev/Enigma/src/Plane.cpp"
+},
+{
+  "directory": "/home/extorc/dev/Enigma/build",
   "command": "/usr/bin/c++  -I/home/extorc/dev/Enigma/src -I/home/extorc/dev/Enigma/glfw -I/home/extorc/dev/Enigma/GLAD -I/home/extorc/dev/Enigma/vendor/glfw/include -I/home/extorc/dev/Enigma/vendor/glad/include -I/home/extorc/dev/Enigma/vendor/glm -g -o CMakeFiles/Enigma.dir/src/Renderer.cpp.o -c /home/extorc/dev/Enigma/src/Renderer.cpp",
   "file": "/home/extorc/dev/Enigma/src/Renderer.cpp"
 },

@@ -1,7 +1,4 @@
 #include "Renderer.h"
-#include <climits>
-#include <cmath>
-#include <iostream>
 #define RAND(X) static_cast <float> (rand()) / static_cast <float> (RAND_MAX)
 
 HitData Renderer::trace(Ray& ray){

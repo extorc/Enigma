@@ -1,10 +1,10 @@
 #pragma once
 
-#include "Mat.h"
-#include "Ray.h"
+#include "Utils/Mat.h"
+#include "Utils/Ray.h"
 #include "glm/glm.hpp"
 #include "Object.h"
-#include "HitData.h"
+#include "Utils/HitData.h"
 
 class Sphere : public Object{
 	public:

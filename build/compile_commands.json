@@ -16,18 +16,18 @@
 },
 {
   "directory": "/home/extorc/dev/Enigma/build",
-  "command": "/usr/bin/c++  -I/home/extorc/dev/Enigma/src -I/home/extorc/dev/Enigma/glfw -I/home/extorc/dev/Enigma/GLAD -I/home/extorc/dev/Enigma/vendor/glfw/include -I/home/extorc/dev/Enigma/vendor/glad/include -I/home/extorc/dev/Enigma/vendor/glm -g -o CMakeFiles/Enigma.dir/src/Plane.cpp.o -c /home/extorc/dev/Enigma/src/Plane.cpp",
-  "file": "/home/extorc/dev/Enigma/src/Plane.cpp"
+  "command": "/usr/bin/c++  -I/home/extorc/dev/Enigma/src -I/home/extorc/dev/Enigma/glfw -I/home/extorc/dev/Enigma/GLAD -I/home/extorc/dev/Enigma/vendor/glfw/include -I/home/extorc/dev/Enigma/vendor/glad/include -I/home/extorc/dev/Enigma/vendor/glm -g -o CMakeFiles/Enigma.dir/src/Objects/Plane.cpp.o -c /home/extorc/dev/Enigma/src/Objects/Plane.cpp",
+  "file": "/home/extorc/dev/Enigma/src/Objects/Plane.cpp"
+},
+{
+  "directory": "/home/extorc/dev/Enigma/build",
+  "command": "/usr/bin/c++  -I/home/extorc/dev/Enigma/src -I/home/extorc/dev/Enigma/glfw -I/home/extorc/dev/Enigma/GLAD -I/home/extorc/dev/Enigma/vendor/glfw/include -I/home/extorc/dev/Enigma/vendor/glad/include -I/home/extorc/dev/Enigma/vendor/glm -g -o CMakeFiles/Enigma.dir/src/Objects/Sphere.cpp.o -c /home/extorc/dev/Enigma/src/Objects/Sphere.cpp",
+  "file": "/home/extorc/dev/Enigma/src/Objects/Sphere.cpp"
 },
 {
   "directory": "/home/extorc/dev/Enigma/build",
   "command": "/usr/bin/c++  -I/home/extorc/dev/Enigma/src -I/home/extorc/dev/Enigma/glfw -I/home/extorc/dev/Enigma/GLAD -I/home/extorc/dev/Enigma/vendor/glfw/include -I/home/extorc/dev/Enigma/vendor/glad/include -I/home/extorc/dev/Enigma/vendor/glm -g -o CMakeFiles/Enigma.dir/src/Renderer.cpp.o -c /home/extorc/dev/Enigma/src/Renderer.cpp",
   "file": "/home/extorc/dev/Enigma/src/Renderer.cpp"
-},
-{
-  "directory": "/home/extorc/dev/Enigma/build",
-  "command": "/usr/bin/c++  -I/home/extorc/dev/Enigma/src -I/home/extorc/dev/Enigma/glfw -I/home/extorc/dev/Enigma/GLAD -I/home/extorc/dev/Enigma/vendor/glfw/include -I/home/extorc/dev/Enigma/vendor/glad/include -I/home/extorc/dev/Enigma/vendor/glm -g -o CMakeFiles/Enigma.dir/src/Sphere.cpp.o -c /home/extorc/dev/Enigma/src/Sphere.cpp",
-  "file": "/home/extorc/dev/Enigma/src/Sphere.cpp"
 },
 {
   "directory": "/home/extorc/dev/Enigma/build",

@@ -1,12 +1,15 @@
 #pragma once
 
-#include "Scene.h"
+#include "Utils/Scene.h"
+#include "Utils/HitData.h"
+#include "Utils/Ray.h"
 #include "glm/glm.hpp"
-#include "Ray.h"
 #include "glm/common.hpp"
 #include "glm/geometric.hpp"
 #include "Camera.h"
-#include "HitData.h"
+#include <climits>
+#include <cmath>
+#include <iostream>
 
 class Renderer{
 	public:

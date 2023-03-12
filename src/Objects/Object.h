@@ -1,6 +1,6 @@
 #pragma once
-#include "HitData.h"
-#include "Ray.h"
+#include "Utils/HitData.h"
+#include "Utils/Ray.h"
 
 class Object{
 	public:

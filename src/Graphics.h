@@ -2,7 +2,7 @@
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
 #include "Window.h"
-#include "Frame.h"
+#include "Utils/Frame.h"
 
 struct Window createWindow();
 

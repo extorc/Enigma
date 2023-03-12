@@ -3,6 +3,10 @@
 #include "glm/gtc/matrix_transform.hpp"
 #include <vector>
 #include "GLFW/glfw3.h"
+#include "glm/ext/matrix_transform.hpp"
+#include "glm/fwd.hpp"
+#include <glm/gtc/quaternion.hpp>
+#include <glm/gtx/quaternion.hpp>
 
 class Camera{
 	public:

@@ -1,8 +1,8 @@
 #pragma once
 
 #include "Mat.h"
-#include "Object.h"
-#include "Sphere.h"
+#include "Objects/Object.h"
+#include "Objects/Sphere.h"
 #include <vector>
 #include <memory>
 

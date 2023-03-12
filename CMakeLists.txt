@@ -4,7 +4,7 @@ project(Enigma)
 add_subdirectory(vendor/glfw)
 add_subdirectory(vendor/glad)
 add_subdirectory(vendor/glm)
-file(GLOB SRC src/*.cpp)
+file(GLOB SRC src/*.cpp src/Objects/*.cpp)
 
 option(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 

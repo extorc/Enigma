@@ -3,22 +3,21 @@
 #include <vector>
 
 //Vendor
-#include "Plane.h"
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
-#include "glm/ext/quaternion_geometric.hpp"
 #include "glm/glm.hpp"
 
 //Enigma
-#include "Frame.h"
 #include "Graphics.h"
 #include "Renderer.h"
 #include "Blit.h"
 #include "Camera.h"
-#include "Ray.h"
-#include "Scene.h"
-#include "Sphere.h"
 #include "Renderer.h"
+#include "Objects/Plane.h"
+#include "Objects/Sphere.h"
+#include "Utils/Frame.h"
+#include "Utils/Ray.h"
+#include "Utils/Scene.h"
 
 int main(){
 	Window window = createWindow();

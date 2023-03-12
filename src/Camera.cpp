@@ -1,8 +1,4 @@
 #include "Camera.h"
-#include "glm/ext/matrix_transform.hpp"
-#include "glm/fwd.hpp"
-#include <glm/gtc/quaternion.hpp>
-#include <glm/gtx/quaternion.hpp>
 
 void Camera::calculateRayDirections(){
 	rayDirections.clear();

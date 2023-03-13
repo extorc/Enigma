@@ -1,4 +1,6 @@
 #include "Renderer.h"
+#include "glm/ext/quaternion_geometric.hpp"
+#include <cmath>
 #define RAND(X) static_cast <float> (rand()) / static_cast <float> (RAND_MAX)
 
 HitData Renderer::trace(Ray& ray){
@@ -43,11 +45,17 @@ glm::vec4 Renderer::processPixel(Ray ray){
 			 Correct for self collision in preparation for bounce
 			 Update ray direction by reflecting the ray at collision site + randomizing normal to introduce roughness before re-calling trace
 			 */
-			
+			Mat objectMat = scene->materialList[scene->objects[data.objectIndex]->matIndex];
 			float d = glm::max(glm::dot(data.normal, -light), 0.0f);
-			finalColor += glm::vec4(d * scene->materialList[scene->objects[data.objectIndex]->matIndex].Albedo, 1.0f) * (float)std::pow(0.5, i);
+			glm::vec3 diffuseLighted = d * objectMat.Albedo;
+
+			float s = std::pow(glm::max(glm::min(glm::dot(glm::normalize(glm::reflect(ray.rayDirection, data.normal)), -light), 1.0f), 0.0f), std::pow(10 * objectMat.specular,1.491362f) + 1);
+			glm::vec3 specularLighted = glm::vec3(1);
+			
+			finalColor += glm::vec4(diffuseLighted + objectMat.specular  * specularLighted * s, 1.0f) * (float)std::pow(0.5, i);
+			
 			ray.origin = data.position + data.normal * 0.001f;
-			ray.rayDirection = glm::reflect(ray.rayDirection, data.normal + (scene->materialList[scene->objects[data.objectIndex]->matIndex].roughness * glm::vec3(RAND(1.0f)-0.5f, RAND(1.0f)-0.5f, RAND(1.0f)-0.5f)));
+			ray.rayDirection = glm::reflect(ray.rayDirection, data.normal + objectMat.roughness * glm::vec3(RAND(1.0f)-0.5f, RAND(1.0f)-0.5f, RAND(1.0f)-0.5f));
 		}
 	}
 

@@ -41,18 +41,20 @@ glm::vec4 Renderer::processPixel(Ray ray){
 
 			/*
 			 Firstly, calculate the light intensity at the point by comparing normal orientation with light direction
-			 Update color based on object color and light intensity calculated above
+			 Then, calculate the specular intensity, which depends on the comparison between reflected ray and light ray. ALso controll fall-off based on roughness function (10-x)^1.491362 + 1
+			 Update color based on object color, light intensity and specular intensity calculated above
 			 Correct for self collision in preparation for bounce
 			 Update ray direction by reflecting the ray at collision site + randomizing normal to introduce roughness before re-calling trace
 			 */
+
 			Mat objectMat = scene->materialList[scene->objects[data.objectIndex]->matIndex];
 			float d = glm::max(glm::dot(data.normal, -light), 0.0f);
 			glm::vec3 diffuseLighted = d * objectMat.Albedo;
 
-			float s = std::pow(glm::max(glm::min(glm::dot(glm::normalize(glm::reflect(ray.rayDirection, data.normal)), -light), 1.0f), 0.0f), std::pow(10 * objectMat.specular,1.491362f) + 1);
+			float s = std::pow(glm::max(glm::min(glm::dot(glm::normalize(glm::reflect(ray.rayDirection, data.normal)), -light), 1.0f), 0.0f), std::pow(10 -	objectMat.roughness,1.491362f) + 1);
 			glm::vec3 specularLighted = glm::vec3(1);
 			
-			finalColor += glm::vec4(diffuseLighted + objectMat.specular  * specularLighted * s, 1.0f) * (float)std::pow(0.5, i);
+			finalColor += glm::vec4(diffuseLighted + (1 - objectMat.roughness) * objectMat.specular  * specularLighted * s, 1.0f) * (float)std::pow(0.5, i);
 			
 			ray.origin = data.position + data.normal * 0.001f;
 			ray.rayDirection = glm::reflect(ray.rayDirection, data.normal + objectMat.roughness * glm::vec3(RAND(1.0f)-0.5f, RAND(1.0f)-0.5f, RAND(1.0f)-0.5f));

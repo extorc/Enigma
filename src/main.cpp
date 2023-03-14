@@ -29,7 +29,7 @@ int main(){
 	scene.objects.push_back(std::unique_ptr<Object>(new Plane({0, 0, 0}, {0, -1.5f, 0}, {0, 1, 0}, 0)));
 	scene.objects.push_back(std::unique_ptr<Object>(new Sphere({0, 0.5f, -1}, 2, 1)));
 	scene.materialList.push_back({0.1f, .2f, {0, 0, 1}});
-	scene.materialList.push_back({1.0f, 1  , {1, 0, 0.5f}});
+	scene.materialList.push_back({0.1f, 1  , {1, 0, 0.5f}});
 
 	std::vector<glm::vec4> pixels;                                                                      //Create buffers for pixel and accumulation data
 	pixels.resize(camera.u * camera.v);

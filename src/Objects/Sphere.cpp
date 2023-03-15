@@ -3,8 +3,9 @@
 float Sphere::intersect(Ray& ray){
 
 	//A is direction.direction which is 1 for normalised vectors
-	float halfB = glm::dot(ray.rayDirection, ray.origin - position);
-	float c = glm::dot(ray.origin - position, ray.origin - position) - radius * radius;
+	glm::vec3 localOrigin = ray.origin - position;
+	float halfB = glm::dot(ray.rayDirection, localOrigin);
+	float c = glm::dot(localOrigin, localOrigin) - radius * radius;
 
 	/*Quadratic equation of the sphere is foudn to be
 

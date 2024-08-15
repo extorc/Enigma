@@ -95,3 +95,25 @@ return scene
   ->objects[closestObjectIndex]
     ->hit(ray, closestT, closestObjectIndex);        //Otherwise return the data about this collision
 ```
+#### Sphere intersection
+The Sphere intersection is carried out using the quadratic equations. 
+The following equation is solved for the sphere intersection.
+```math
+(C-P(t)).(C-P(t)) = r^{2}
+```
+```math
+(C-(Q+tD)).(C-(Q+tD)) = r^{2} \newline
+```
+```math
+(-tD+(C-Q)).(-tD+(C-Q)) = r^{2} \newline
+```
+```math
+t^{2}.D.D − 2tD.(C−Q)+(C−Q).(C−Q) = r^{2}
+```
+This equation is found to be quadratic in `t` and hence can be solved for using the quadratic formula
+```math
+\frac {-b \pm \sqrt{b^2 -4ac}} {2a}
+```
+T is found using this formula and returned in the `Sphere::intersect()` function.
+#### Plane intersection
+<TODO>

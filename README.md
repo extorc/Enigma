@@ -23,6 +23,7 @@ The Project uses <a href = "https://www.opengl.org/">OpenGL</a> to display frame
 * <a href = "https://github.com/Dav1dde/glad">Glad</a> for an OpenGL wrapper.
 * <a href = "https://github.com/g-truc/glm">Glm</a> for matrix and vector mathematics.
 ## Documentation
+### Entry and structure
 The application is entered from the `main.cpp` where the window is created using a wrapper `Window` struct. The GLFW and GLAD libraries are initialized in the `createWindow` function implemented in `Graphics.h`.<br>
 A Scene object is created to which Sphere, Plane and Material objects are pushed.<br><br>
 A `glm::vec4` pixel vector is created to store the final framebuffer which is initialized to all zeroes. Another vector of the same dimension is created called `accumilation` to store the pre-normalized pixel data. The pixel data will be first calculated and appended to accumilation every sample and then normalized and finalized into pixel vector.<br><br>
@@ -38,9 +39,39 @@ if(sampleCount < maxSampleCount){
       };                                                                              //Generate a ray
       auto color = renderer.processPixel(ray);                                        //And process the ray
       accumulation[j * camera.u + i] += color;                                        //Accumulate the data processed
-      pixels[j * camera.u + i] = accumulation[j * camera.u + i]/(float)sampleCount;   //And update pixel data based on accumulation and sample count
+      pixels[j * camera.u + i] = accumulation[j * camera.u + i]/(float)sampleCount;   //Normalize pixel data based on sample count
     }
   }
   sampleCount++;                                                                      //Update sample count
 }
+```
+### Pixel Processing
+The `processPixel()` function is run for each sample of every function. The function traces the Ray generated in the camera class through its origin towards its direction using the `trace()` function which returns a `HitData` object.<br><br> Using this HitData, it is verified whether the ray intersects any scene objects, and if it does, the function generates the appropriate color for the pixel by calculating material and lighting parameters.
+#### Lighting and Materials
+The Lighting and Materials in this Renderer is handled in a two-step process.
+* First the normal vector at a point of the object is compared with the light direction and a Albedo appropriate diffuse color is generated.
+```c++
+Mat objectMat = scene->materialList[scene->objects[data.objectIndex]->matIndex];
+  float d = glm::max(glm::dot(data.normal, -scene->light), 0.0f);
+  glm::vec3 diffuseLighted = d * objectMat.Albedo;
+```
+* Then the specular fall-off of the material is calculated along with the roughness of the object material by comparing the reflected version of the incident ray with the light direction.
+```c++
+float s = std::pow(
+  glm::max(
+    glm::min(
+      glm::dot(
+        glm::reflect(ray.rayDirection, data.normal), -scene->light)
+      , 1.0f),
+     0.0f),
+  ROUGH_FUNC(objectMat.roughness));
+glm::vec3 specularLighted = glm::vec3(1);
+```
+* These two stages are then combined into the `finalColor`. These `finalColor` calculations are done several times per pixel as the ray has to be bonuced off the surface of an object and intersect another object.<br> In order to implement this, the incident ray is reflected about the surface normal and ran through the trace function again in a for loop and the final color data is accumilated and returned to the main Render loop.
+```c++
+ray.origin = data.position + data.normal * 0.001f;
+ray.rayDirection = glm::reflect(
+  ray.rayDirection,
+  data.normal + objectMat.roughness * glm::vec3(RAND(1.0f)-0.5f, RAND(1.0f)-0.5f, RAND(1.0f)-0.5f)
+);
 ```

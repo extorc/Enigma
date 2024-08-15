@@ -11,6 +11,7 @@ Clone the repo using <br>
   cd build
   cmake ../
 ```
+Make sure cmake on your machine is configured to run the appropriate version of CXX compiler by running the `cmake -G` command.
 * Compile and execute
 ```bash
   make

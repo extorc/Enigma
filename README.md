@@ -75,3 +75,23 @@ ray.rayDirection = glm::reflect(
   data.normal + objectMat.roughness * glm::vec3(RAND(1.0f)-0.5f, RAND(1.0f)-0.5f, RAND(1.0f)-0.5f)
 );
 ```
+### Object intersection
+The Object system in the Renderer is handled by an Object parent class which is extended by (as of August 2024) 2 child classes, Plane and Sphere.<br>
+Each child class of Object must have `Hit()` and an `intersect()` function. The role of the intersect function is to check whether the ray intersects with the given object or not. If intersected, the function returns the distance and the nearest intersected object is found. This objects respective Hit function is called which then packages the Hit Data required for the Trace function to return for the pixel to be processed.<br>
+```c++
+float closestT = FLT_MAX;                            //Keeping track of Closest distance of collision
+int closestObjectIndex = -1;                         //Keeping track of the closest object at the closest distance
+
+for(int i = 0; i < scene->objects.size(); i++){
+  float t = scene->objects[i]->intersect(ray);       //Looping through all the object's respective intersect functions
+  if(t < closestT && t > 0){
+    closestT = t;                                    //Updating the closest distance and object if we have a nearer candidate
+    closestObjectIndex = i;
+  }
+}
+if(closestObjectIndex < 0)
+  return miss();                                     //If no close object was detected, run the global miss function
+return scene
+  ->objects[closestObjectIndex]
+    ->hit(ray, closestT, closestObjectIndex);        //Otherwise return the data about this collision
+```

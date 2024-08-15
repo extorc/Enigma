@@ -116,4 +116,9 @@ This equation is found to be quadratic in `t` and hence can be solved for using 
 ```
 T is found using this formula and returned in the `Sphere::intersect()` function.
 #### Plane intersection
-<TODO>
+The intersection with a plane in implemented by refering to <a href = "https://lousodrome.net/blog/light/2020/07/03/intersection-of-a-ray-and-a-plane/">this</a> resource.<br>
+According to it, in order to find an intersection between a ray and a plane, we need to find a point which lies both on the ray and the place ie it satisfies both the equation of the ray `P = O + tD` and the equation of the plane `(P-S).N = 0`. Substituting P from the ray to the plane and solving for t, we get
+```math
+t = \frac {(S-O).N}{D.N}
+```
+T is found using this formula and returned in the `Plane::intersect()` function.

@@ -6,18 +6,18 @@
 
 HitData Renderer::trace(Ray& ray){
 	float closestT = FLT_MAX;                                                                        //Keeping track of Closest distance of collision and the object occupied at that distance
-	int closestSphereIndex = -1;
+	int closestObjectIndex = -1;
 
 	for(int i = 0; i < scene->objects.size(); i++){
 		float t = scene->objects[i]->intersect(ray);                                                   //Looping through all the objects in the scene and running their respective intersect functions
 		if(t < closestT && t > 0){
 			closestT = t;                                                                                //Updating the closest distance and object in case we have a nearer candidate
-			closestSphereIndex = i;
+			closestObjectIndex = i;
 		}
 	}
-	if(closestSphereIndex < 0)
+	if(closestObjectIndex < 0)
 		return miss();                                                                                 //If no close object was detected, run the global miss function
-	return scene->objects[closestSphereIndex]->hit(ray, closestT, closestSphereIndex);               //Otherwise return the data about this collision
+	return scene->objects[closestObjectIndex]->hit(ray, closestT, closestObjectIndex);               //Otherwise return the data about this collision
 }
 
 HitData Renderer::miss(){
@@ -26,7 +26,7 @@ HitData Renderer::miss(){
 	return data;
 }
 
-glm::vec4 Renderer::processPixel(Ray ray){
+glm::vec4 Renderer::processPixel(Ray& ray){
 	glm::vec4 finalColor(0.0f);
 	int bounces = 5;
 	glm::vec4 skyBox = {0.6f, 0.6f, 0.9f, 1.0f};

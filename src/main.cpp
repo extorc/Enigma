@@ -35,7 +35,7 @@ int main(){
 	scene.materialList.push_back({1, 0  , {1, 0, 0.5f}});
 	scene.materialList.push_back({0, 1  , {1, 0, 0.5f}});
 
-	std::vector<glm::vec4> pixels;                                                                      //Create buffers for pixel and accumulation data
+	std::vector<glm::vec4> pixels;                                  //Create buffers for pixel and accumulation data
 	pixels.resize(camera.u * camera.v);
 	std::fill(pixels.begin(), pixels.end(), glm::vec4(0));
 	std::vector<glm::vec4> accumulation;
@@ -46,7 +46,7 @@ int main(){
 	int image_width = window.width;
 
 	int sampleCount = 1;
-	int maxSampleCount = 3;
+	int maxSampleCount = 30;
 	bool doneRendering = false;
 	camera.calculateRayDirections();
 	double startTime = glfwGetTime();
@@ -62,12 +62,12 @@ int main(){
 			}
 			sampleCount++;                                                                                    //Update sample count
 
-			std::cout<<sampleCount<<std::endl;
+			//std::cout<<sampleCount<<std::endl;
 		}
 		if(sampleCount == maxSampleCount && !doneRendering){
 			std::cout<<"Render time : " << glfwGetTime() - startTime<<std::endl;
 			doneRendering = true;
-			break;
+			// break;
 		}
 		blitFrame(frame, image_width, image_height, pixels);
 		glfwSwapBuffers(window.window);

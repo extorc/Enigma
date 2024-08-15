@@ -1,6 +1,6 @@
 #include "Blit.h"
 
-void blitFrame(Frame frame, int u, int v, std::vector<glm::vec4> pixels){
+void blitFrame(Frame frame, int u, int v, const std::vector<glm::vec4>& pixels){
 	glBindTexture(GL_TEXTURE_2D, frame.texture);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, u, v, 0, GL_RGBA, GL_FLOAT, pixels.data());
 	glBindFramebuffer(GL_READ_FRAMEBUFFER, frame.framebuffer);

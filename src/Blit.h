@@ -2,4 +2,4 @@
 #include "glm/glm.hpp"
 #include <vector>
 
-void blitFrame(Frame frame, int u, int v, std::vector<glm::vec4> pixels);
+void blitFrame(Frame frame, int u, int v, const std::vector<glm::vec4>& pixels);

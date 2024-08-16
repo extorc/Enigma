@@ -17,6 +17,9 @@ Make sure cmake on your machine is configured to run the appropriate version of 
   make
   Enigma
 ```
+## Background
+This project was made in an effort to better understand C and C++ and Computational Graphics in general and it might involve practices that are not perfect.<br>
+For performance optimization, `Valgrind` and `Callgrind` along with `Kcachegrind` were used on an Ubuntu WSL to understand the call sequence and instruction usage of the application and several improvements were made towards the end of the initial development.
 ## Working of the project
 The Project uses <a href = "https://www.opengl.org/">OpenGL</a> to display framebuffers and to carry out matrix and vector calculations.<br>
 * <a href = "https://github.com/glfw/glfw">Glfw</a> for instantiating a window.

@@ -1,4 +1,4 @@
-#include "Sphere.h"
+#include "Objects/Sphere.h"
 
 float Sphere::intersect(Ray& ray){
 

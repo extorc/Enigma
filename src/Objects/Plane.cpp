@@ -1,4 +1,4 @@
-#include "Plane.h"
+#include "Objects/Plane.h"
 
 float Plane::intersect(Ray& ray){
 	float t = glm::dot(planePoint - ray.origin, planeNormal)/glm::dot(ray.rayDirection, planeNormal);

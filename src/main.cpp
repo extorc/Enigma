@@ -1,23 +1,4 @@
-//C++ Std
-#include <iostream>
-#include <vector>
-
-//Vendor
-#include "glad/glad.h"
-#include "GLFW/glfw3.h"
-#include "glm/glm.hpp"
-
-//Enigma
-#include "Graphics.h"
-#include "Renderer.h"
-#include "Blit.h"
-#include "Camera.h"
-#include "Renderer.h"
-#include "Objects/Plane.h"
-#include "Objects/Sphere.h"
-#include "Utils/Frame.h"
-#include "Utils/Ray.h"
-#include "Utils/Scene.h"
+#include "Enigma.h"
 
 int main(){
 	Window window = createWindow();

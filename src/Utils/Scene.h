@@ -7,8 +7,8 @@
 #include <vector>
 #include <memory>
 
-struct Scene{
+typedef struct{
 	std::vector<std::unique_ptr<Object>> objects;
 	std::vector<Mat> materialList;
 	glm::vec3 light = glm::normalize(glm::vec3(-1, -1, -1));
-};
+}Scene;

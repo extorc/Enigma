@@ -1,8 +1,8 @@
 #pragma once
 #include <glad/glad.h>
 
-struct Frame{
+typedef struct{
 	GLuint texture;
 	GLuint framebuffer;
-};
+}Frame;
 

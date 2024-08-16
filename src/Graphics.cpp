@@ -1,6 +1,6 @@
 #include "Graphics.h"
 
-struct Window createWindow(){
+Window createWindow(){
 	GLFWwindow* window;
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -10,12 +10,12 @@ struct Window createWindow(){
 	window = glfwCreateWindow(500, 500, "Enigma", NULL, NULL);
 	glfwMakeContextCurrent(window);
 	gladLoadGLLoader((GLADloadproc) glfwGetProcAddress);
-	struct Window win = {window, 500, 500};
+	Window win = {window, 500, 500};
 	return win;
 }
 
-struct Frame createTexture(){
-	struct Frame frame;
+Frame createTexture(){
+	Frame frame;
 	glGenTextures(1, &frame.texture);
 	glBindTexture(GL_TEXTURE_2D, frame.texture);
 	glGenFramebuffers(1, &frame.framebuffer);

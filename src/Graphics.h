@@ -4,6 +4,6 @@
 #include "Window.h"
 #include "Utils/Frame.h"
 
-struct Window createWindow();
+Window createWindow();
 
-struct Frame createTexture();
+Frame createTexture();

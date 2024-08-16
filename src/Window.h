@@ -2,8 +2,8 @@
 
 #include "GLFW/glfw3.h"
 
-struct Window{
+typedef struct{
 	GLFWwindow* window;
 	uint32_t width;
 	uint32_t height;
-};
+}Window;

@@ -1,10 +1,13 @@
 #include "Enigma.h"
 
+#define DX 700
+#define DY 700
+
 int main(){
-	Window window = createWindow();
+	Window window = createWindow(DX, DY);
 	Frame frame = createTexture();
 	Scene scene;
-	Camera camera({0, 0, 5}, 500, 500);
+	Camera camera({0, 0, 5}, DX, DY);
 	Renderer renderer(camera, &scene);
 
 	scene.objects.push_back(std::unique_ptr<Object>(new Plane({0, 0, 0}, {0, -1.5f, 0}, {0, 1, 0}, 0)));

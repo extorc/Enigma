@@ -4,6 +4,6 @@
 #include "Window.h"
 #include "Utils/Frame.h"
 
-Window createWindow();
+Window createWindow(unsigned int dx, unsigned int dy);
 
 Frame createTexture();

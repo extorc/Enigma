@@ -125,3 +125,10 @@ According to it, in order to find an intersection between a ray and a plane, we 
 t = \frac {(S-O).N}{D.N}
 ```
 T is found using this formula and returned in the `Plane::intersect()` function.
+#### Triangle intersection
+The implementation for the Triangle Ray intersection is done using the Möller–Trumbore intersection algorithm.
+<a href = "https://en.wikipedia.org/wiki/M%C3%B6ller%E2%80%93Trumbore_intersection_algorithm">Read More</a><br><br>
+This involves first checking whether the ray is parellel to the plane of the Triangle, if not then the ray must intersect the plane somewhere. It is the matter of checking if that intersection takes place within the body of the triangle.<br><br>
+This is achieved using barrycentric coordinates.
+This is a coordinate system independant of the position and orientation of the object and represents any point in terms of the edges/vertices of the triangle. So a point in the plane can be represented as `uV1 + vV2 + wV3` instead of x, y, z space. When this point is equated to the equation of the ray and we solve for u, v and t, we can check the bounds of these to find out whether the point is falling within the triangle.<br><br>
+T is found using this solution and returned in the `Triangle::intersect()` function.

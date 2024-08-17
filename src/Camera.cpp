@@ -6,7 +6,7 @@ void Camera::calculateRayDirections(){
 		for(int i = 0; i < u; i++){
 			glm::vec2 ndc((float)i/(float)u, (float)j/(float)v);
 			glm::vec2 screen = ndc * 2.0f - 1.0f; 
-			glm::vec4 target = glm::vec4(screen, -1, 1);
+			glm::vec4 target = glm::vec4(screen, -2, 1);
 			rayDirections.push_back(glm::vec3(getInverseMatrix() * glm::vec4(glm::normalize(glm::vec3(target) / target.w), 0)));
 		}
 	}

@@ -26,8 +26,9 @@ Utils/Scene.h : Collection of all the object child instances, materials and ligh
 */
 
 /*
-Objects/Sphere.h : Sphere Child class for Object system : Quadratic formula to detect ray intersection and returns HitData for Ray Tracing.
-Objects/Plane.h  : Plane Child class for Object system  : Plane ray intersection and returns HitData for Ray Tracing. 
+Objects/Sphere.h  : Sphere Child class for Object system    : Quadratic formula to detect ray intersection and returns HitData for Ray Tracing.
+Objects/Plane.h   : Plane Child class for Object system     : Plane ray intersection and returns HitData for Ray Tracing. 
+Objects/Triangle.h: Triangle Child class for Object system  : Triangle ray intersection using Möller–Trumbore intersection algorithm and returns HitData for Ray Tracing. 
 */
 
 #include "Graphics.h"
@@ -39,3 +40,4 @@ Objects/Plane.h  : Plane Child class for Object system  : Plane ray intersection
 #include "Utils/Scene.h"
 #include "Objects/Sphere.h"
 #include "Objects/Plane.h"
+#include "Objects/Triangle.h"

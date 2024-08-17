@@ -1,13 +1,14 @@
 #include "Enigma.h"
 
-#define DX 700
-#define DY 700
+#define DX 500
+#define DY 500
 
 int main(){
 	Window window = createWindow(DX, DY);
 	Frame frame = createTexture();
 	Scene scene;
-	Camera camera({0, 0, 5}, DX, DY);
+	Camera camera({0, 5, 10}, DX, DY);
+	camera.rotateCamera(0.5f, 0);
 	Renderer renderer(camera, &scene);
 	int sampleCount = 1;
 	int maxSampleCount = 30;
@@ -17,7 +18,18 @@ int main(){
 	scene.objects.push_back(std::unique_ptr<Object>(new Sphere({ 0   , 0.5f, -1}, 1.5f, 1)));
 	scene.objects.push_back(std::unique_ptr<Object>(new Sphere({-3.5f, 0.5f, -1}, 1.5f, 2)));
 	scene.objects.push_back(std::unique_ptr<Object>(new Sphere({ 3.5f, 0.5f, -1}, 1.5f, 3)));
-
+	scene.objects.push_back(std::unique_ptr<Object>(new Triangle({
+		glm::vec3(0, 1, 2), 
+		glm::vec3(2, 1, 2),
+		glm::vec3(2, 3, 2),
+		1
+	})));
+	scene.objects.push_back(std::unique_ptr<Object>(new Triangle({
+		glm::vec3(0, 1, 2), 
+		glm::vec3(2, 3, 2),
+		glm::vec3(0, 3, 2),
+		2
+	})));
 	scene.materialList.push_back({0.1f, .2f, {0, 0, 1}});
 	scene.materialList.push_back({0.5f, 0.5f  , {1, 0, 0.5f}});
 	scene.materialList.push_back({1, 0  , {1, 0, 0.5f}});

@@ -13,13 +13,3 @@ Window createWindow(unsigned int dx, unsigned int dy){
 	Window win = {window, dx, dy};
 	return win;
 }
-
-Frame createTexture(){
-	Frame frame;
-	glGenTextures(1, &frame.texture);
-	glBindTexture(GL_TEXTURE_2D, frame.texture);
-	glGenFramebuffers(1, &frame.framebuffer);
-	glBindFramebuffer(GL_FRAMEBUFFER, frame.framebuffer);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, frame.texture, 0);
-	return frame;
-}

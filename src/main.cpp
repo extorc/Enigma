@@ -5,15 +5,14 @@
 
 int main(){
 	float vertices[] = {
-		-1.0f, -1.0f, 0.0f, // bottom left
-		1.0f, -1.0f, 0.0f, // bottom right
-		-1.0f,  1.0f, 0.0f,  // top
+		-1.0f, -1.0f, 0.0f,
+		1.0f, -1.0f, 0.0f, 
+		-1.0f,  1.0f, 0.0f,
 		1.0f, -1.0f, 0.0f,
 		-1.0f,  1.0f, 0.0f,
 		1.0f, 1.0f, 0.0f
 	};
 	Window window = createWindow(DX, DY);
-	// Frame frame = createTexture();
 	Scene scene;
 	Camera camera({0, 5, 10}, DX, DY);
 	camera.rotateCamera(0.5f, 0);
@@ -60,7 +59,6 @@ int main(){
 		}
 	})";
 
-	// Vertex Shader
 	unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
 	glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
 	glCompileShader(vertexShader);
@@ -72,7 +70,6 @@ int main(){
 		std::cerr << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
 	}
 
-	// Fragment Shader
 	unsigned int fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
 	glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
 	glCompileShader(fragmentShader);
@@ -82,7 +79,6 @@ int main(){
 		std::cerr << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" << infoLog << std::endl;
 	}
 
-	// Shader Program
 	unsigned int shaderProgram = glCreateProgram();
 	glAttachShader(shaderProgram, vertexShader);
 	glAttachShader(shaderProgram, fragmentShader);
@@ -93,7 +89,6 @@ int main(){
 		std::cerr << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
 	}
 
-	// Clean up shaders
 	glDeleteShader(vertexShader);
 	glDeleteShader(fragmentShader);
 

@@ -1,16 +1,16 @@
 #include "Enigma.h"
 
-#define DX 500
-#define DY 500
+#define DX 480
+#define DY 480
 
 int main(){
 	float vertices[] = {
-		-1.0f, -1.0f, 0.0f,
-		1.0f, -1.0f, 0.0f, 
-		-1.0f,  1.0f, 0.0f,
-		1.0f, -1.0f, 0.0f,
-		-1.0f,  1.0f, 0.0f,
-		1.0f, 1.0f, 0.0f
+		-1.0f, -1.0f, 0.0f, 0.0f, 0.0f,
+		1.0f, -1.0f, 0.0f, 0.0f, 1.0f,
+		-1.0f,  1.0f, 0.0f, 1.0f, 1.0f,
+		1.0f, -1.0f, 0.0f, 0.0f, 1.0f,
+		-1.0f,  1.0f, 0.0f, 1.0f, 1.0f,
+		1.0f, 1.0f, 0.0f, 1.0f, 0.0f
 	};
 	Window window = createWindow(DX, DY);
 	Scene scene;
@@ -18,6 +18,15 @@ int main(){
 	camera.rotateCamera(0.5f, 0);
 	Renderer renderer(camera, &scene);
 
+	GLuint frameBuffer;
+	glCreateTextures(GL_TEXTURE_2D, 1, &frameBuffer);
+	glTextureParameteri(frameBuffer, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTextureParameteri(frameBuffer, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTextureParameteri(frameBuffer, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTextureParameteri(frameBuffer, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTextureStorage2D(frameBuffer, 1, GL_RGBA32F, DX, DY);
+	glBindImageTexture(0, frameBuffer, 0, GL_FALSE, 0, GL_WRITE_ONLY, GL_RGBA32F);
+	
 	unsigned int VBO, VAO;
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
@@ -27,62 +36,51 @@ int main(){
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3*sizeof(float)));
+	glEnableVertexAttribArray(1);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 
 	const char* vertexShaderSource = R"(
-	#version 330 core
-	layout(location = 0) in vec3 aPos;
+		#version 460 core
+		layout(location = 0) in vec3 aPos;
+		layout(location = 1) in vec2 uv;
 
-	void main() {
-		gl_Position = vec4(aPos, 1.0);
-	}
-	)";
-	const char* fragmentShaderSource = R"(#version 430 core
-	out vec4 FragColor;
+		out vec2 UV;
 
-	layout(std430, binding = 0) buffer PixelColors {
-		vec4 pixelColors[];
-	};
+		void main() {
+			gl_Position = vec4(aPos, 1.0);
+			UV = uv;
+		})";
 
-	void main() {
-		ivec2 pixelCoord = ivec2(gl_FragCoord.xy);
-		int pixelIndex = pixelCoord.y * 500 + pixelCoord.x;
+	const char* fragmentShaderSource = R"(#version 460 core
+		out vec4 FragColor;
+		uniform sampler2D screen;
+		in vec2 UV;
+		
+		void main() {
+			FragColor = texture(screen, UV);
+		})";
 
-		if (pixelIndex >= 0 && pixelIndex < 500 * 500) {
-			FragColor = pixelColors[pixelIndex];
-		} else {
-			FragColor = vec4(1.0, 0.0, 0.0, 1.0); // Default to red if out of bounds
-		}
-	})";
+	const char* computeShaderSource = R"(#version 460 core
+		layout(local_size_x = 8, local_size_y = 4, local_size_z = 1) in;
+		layout(rgba32f, binding = 0) uniform image2D screen;
+		void main(){
+			imageStore(screen, ivec2(gl_GlobalInvocationID.xy), vec4(1.0, 0.5, 0.5, 1.0));
+		})";
 
-	unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
-	glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
-	glCompileShader(vertexShader);
-	int success;
-	char infoLog[512];
-	glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
-	if (!success) {
-		glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
-		std::cerr << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
-	}
-
-	unsigned int fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-	glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
-	glCompileShader(fragmentShader);
-	glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
-	if (!success) {
-		glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
-		std::cerr << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" << infoLog << std::endl;
-	}
+	unsigned int vertexShader = createShader(GL_VERTEX_SHADER, vertexShaderSource);
+	unsigned int fragmentShader = createShader(GL_FRAGMENT_SHADER, fragmentShaderSource);
 
 	unsigned int shaderProgram = glCreateProgram();
 	glAttachShader(shaderProgram, vertexShader);
 	glAttachShader(shaderProgram, fragmentShader);
 	glLinkProgram(shaderProgram);
+	int success;
+	char infoLog[512];
 	glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
 	if (!success) {
 		glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
@@ -92,6 +90,15 @@ int main(){
 	glDeleteShader(vertexShader);
 	glDeleteShader(fragmentShader);
 
+	GLuint computeShader = glCreateShader(GL_COMPUTE_SHADER);
+	glShaderSource(computeShader, 1, &computeShaderSource, NULL);
+	glCompileShader(computeShader);
+	checkShaderCompilation(computeShader, GL_COMPUTE_SHADER);
+
+	GLuint computeProgram = glCreateProgram();
+	glAttachShader(computeProgram, computeShader);
+	glLinkProgram(computeProgram);
+	
 	int sampleCount = 1;
 	int maxSampleCount = 30;
 	bool doneRendering = false;
@@ -119,12 +126,6 @@ int main(){
 
 	std::vector<glm::vec4> pixels(camera.u * camera.v, glm::vec4(0));                              //Create buffers for pixel and accumulation data
 	std::vector<glm::vec4> accumulation(camera.u * camera.v, glm::vec4(0));
-
-	unsigned int ssbo;
-	glGenBuffers(1, &ssbo);
-	glBindBuffer(GL_SHADER_STORAGE_BUFFER, ssbo);
-	glBufferData(GL_SHADER_STORAGE_BUFFER, pixels.size() * sizeof(glm::vec4), NULL, GL_DYNAMIC_DRAW);
-	glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
 
 	int image_height = window.height;
 	int image_width = window.width;
@@ -157,15 +158,16 @@ int main(){
 			doneRendering = true;
 		}
 		if(sampleCount < maxSampleCount) std::cout<<sampleCount<<" "<< glfwGetTime() - startTime<<std::endl;
-		 // Update SSBO with latest pixel data
-		glBindBuffer(GL_SHADER_STORAGE_BUFFER, ssbo);
-		glBufferSubData(GL_SHADER_STORAGE_BUFFER, 0, pixels.size() * sizeof(glm::vec4), pixels.data());
-		glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
+
+		glUseProgram(computeProgram);
+		glBindTextureUnit(0, frameBuffer);
+		glUniform1i(glGetUniformLocation(computeProgram, "screen"), 0);
+		glDispatchCompute(ceil(DX / 8), ceil(DY / 4), 1);
+		glMemoryBarrier(GL_ALL_BARRIER_BITS);
 
 		glClear(GL_COLOR_BUFFER_BIT);
 		glUseProgram(shaderProgram);
 		glBindVertexArray(VAO);
-		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, ssbo);
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 
 		glfwSwapBuffers(window.window);

@@ -1,6 +1,7 @@
 //CXX STL includes
 #include <iostream>
 #include <vector>
+#include <fstream>
 
 /*
 GLAD : OpenGL Wrapper, included first per documentation

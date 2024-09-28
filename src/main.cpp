@@ -3,6 +3,15 @@
 #define DX 480
 #define DY 480
 
+std::string readFile(const std::string& filePath) {
+    std::ifstream file(filePath);
+    if (!file.is_open()) {
+        std::cerr << "Error: Could not open the file!" << std::endl;
+        return "";
+    }
+    return std::string((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
+}
+
 int main(){
 	float vertices[] = {
 		-1.0f, -1.0f, 0.0f, 0.0f, 0.0f,
@@ -44,36 +53,9 @@ int main(){
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 
-	const char* vertexShaderSource = R"(
-		#version 460 core
-		layout(location = 0) in vec3 aPos;
-		layout(location = 1) in vec2 uv;
-
-		out vec2 UV;
-
-		void main() {
-			gl_Position = vec4(aPos, 1.0);
-			UV = uv;
-		})";
-
-	const char* fragmentShaderSource = R"(#version 460 core
-		out vec4 FragColor;
-		uniform sampler2D screen;
-		in vec2 UV;
-		
-		void main() {
-			FragColor = texture(screen, UV);
-		})";
-
-	const char* computeShaderSource = R"(#version 460 core
-		layout(local_size_x = 8, local_size_y = 4, local_size_z = 1) in;
-		layout(rgba32f, binding = 0) uniform image2D screen;
-		
-		void main(){
-			ivec2 pixelCoords = ivec2(gl_GlobalInvocationID.xy);
-			vec4 pixelColor = imageLoad(screen, pixelCoords);
-			imageStore(screen, pixelCoords, pixelColor);
-		})";
+	const char* vertexShaderSource = readFile("C:/Users/mitta/dev/Enigma/src/res/vertex.glsl").c_str();
+	const char* fragmentShaderSource = readFile("C:/Users/mitta/dev/Enigma/src/res/fragment.glsl").c_str();
+	const char* computeShaderSource = readFile("C:/Users/mitta/dev/Enigma/src/res/compute.glsl").c_str();
 
 	unsigned int vertexShader = createShader(GL_VERTEX_SHADER, vertexShaderSource);
 	unsigned int fragmentShader = createShader(GL_FRAGMENT_SHADER, fragmentShaderSource);

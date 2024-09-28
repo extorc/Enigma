@@ -6,11 +6,11 @@
 int main(){
 	float vertices[] = {
 		-1.0f, -1.0f, 0.0f, 0.0f, 0.0f,
-		1.0f, -1.0f, 0.0f, 0.0f, 1.0f,
-		-1.0f,  1.0f, 0.0f, 1.0f, 1.0f,
-		1.0f, -1.0f, 0.0f, 0.0f, 1.0f,
-		-1.0f,  1.0f, 0.0f, 1.0f, 1.0f,
-		1.0f, 1.0f, 0.0f, 1.0f, 0.0f
+		1.0f, -1.0f, 0.0f, 1.0f, 0.0f,
+		-1.0f,  1.0f, 0.0f, 0.0f, 1.0f,
+		1.0f, -1.0f, 0.0f, 1.0f, 0.0f,
+		-1.0f,  1.0f, 0.0f, 0.0f, 1.0f,
+		1.0f, 1.0f, 0.0f, 1.0f, 1.0f
 	};
 	Window window = createWindow(DX, DY);
 	Scene scene;
@@ -68,8 +68,11 @@ int main(){
 	const char* computeShaderSource = R"(#version 460 core
 		layout(local_size_x = 8, local_size_y = 4, local_size_z = 1) in;
 		layout(rgba32f, binding = 0) uniform image2D screen;
+		
 		void main(){
-			imageStore(screen, ivec2(gl_GlobalInvocationID.xy), vec4(1.0, 0.5, 0.5, 1.0));
+			ivec2 pixelCoords = ivec2(gl_GlobalInvocationID.xy);
+			vec4 pixelColor = imageLoad(screen, pixelCoords);
+			imageStore(screen, pixelCoords, pixelColor);
 		})";
 
 	unsigned int vertexShader = createShader(GL_VERTEX_SHADER, vertexShaderSource);
@@ -158,6 +161,8 @@ int main(){
 			doneRendering = true;
 		}
 		if(sampleCount < maxSampleCount) std::cout<<sampleCount<<" "<< glfwGetTime() - startTime<<std::endl;
+
+		glTextureSubImage2D(frameBuffer, 0, 0, 0, DX, DY, GL_RGBA, GL_FLOAT, pixels.data());
 
 		glUseProgram(computeProgram);
 		glBindTextureUnit(0, frameBuffer);

@@ -4,12 +4,16 @@
 #define DY 480
 
 std::string readFile(const std::string& filePath) {
-    std::ifstream file(filePath);
-    if (!file.is_open()) {
-        std::cerr << "Error: Could not open the file!" << std::endl;
-        return "";
-    }
-    return std::string((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
+    std::string str;
+	std::ifstream file;
+	std::string ret = "";
+	file.open(filePath);
+	while (std::getline(file, str))
+	{
+		ret = ret + str + "\n";
+	}
+	file.close();
+	return ret;
 }
 
 int main(){
@@ -53,12 +57,12 @@ int main(){
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 
-	const char* vertexShaderSource = readFile("C:/Users/mitta/dev/Enigma/src/res/vertex.glsl").c_str();
-	const char* fragmentShaderSource = readFile("C:/Users/mitta/dev/Enigma/src/res/fragment.glsl").c_str();
-	const char* computeShaderSource = readFile("C:/Users/mitta/dev/Enigma/src/res/compute.glsl").c_str();
+	std::string vertexShaderSource = readFile("C:/Users/mitta/dev/Enigma/src/res/vertex.glsl");
+	std::string fragmentShaderSource = readFile("C:/Users/mitta/dev/Enigma/src/res/fragment.glsl");
+	std::string computeShaderSource = readFile("C:/Users/mitta/dev/Enigma/src/res/compute.glsl");
 
-	unsigned int vertexShader = createShader(GL_VERTEX_SHADER, vertexShaderSource);
-	unsigned int fragmentShader = createShader(GL_FRAGMENT_SHADER, fragmentShaderSource);
+	unsigned int vertexShader = createShader(GL_VERTEX_SHADER, vertexShaderSource.c_str());
+	unsigned int fragmentShader = createShader(GL_FRAGMENT_SHADER, fragmentShaderSource.c_str());
 
 	unsigned int shaderProgram = glCreateProgram();
 	glAttachShader(shaderProgram, vertexShader);
@@ -75,10 +79,7 @@ int main(){
 	glDeleteShader(vertexShader);
 	glDeleteShader(fragmentShader);
 
-	GLuint computeShader = glCreateShader(GL_COMPUTE_SHADER);
-	glShaderSource(computeShader, 1, &computeShaderSource, NULL);
-	glCompileShader(computeShader);
-	checkShaderCompilation(computeShader, GL_COMPUTE_SHADER);
+	GLuint computeShader = createShader(GL_COMPUTE_SHADER, computeShaderSource.c_str());
 
 	GLuint computeProgram = glCreateProgram();
 	glAttachShader(computeProgram, computeShader);
